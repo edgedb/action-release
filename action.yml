@@ -1,0 +1,20 @@
+name: 'Validate Release PR'
+description: 'Performs checks on release PRs'
+author: 'EdgeDB Inc.'
+inputs:
+  version-file:
+    description: Path to the file contaning the version string.
+  version-expr:
+    description: |
+      Extended regular expression used to match the line with the
+      version string.  The first capturing group must match the
+      version string itself, excluding the quotes.  The pattern may
+      contain [[:PEP440:]] and [[:SEMVER:]] magic "classes" that match
+      Python and SemVer versions correspondingly.
+    default: ''
+outputs:
+  version:
+    description: The release version.
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
