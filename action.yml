@@ -2,13 +2,13 @@ name: 'Validate Release PR'
 description: 'Performs checks on release PRs'
 author: 'EdgeDB Inc.'
 inputs:
-  github-token:
+  github_token:
     description: Github API token.
     required: true
-  version-file:
+  version_file:
     description: Path to the file contaning the version string.
     required: false
-  version-expr:
+  version_expr:
     description: |
       Extended regular expression used to match the line with the
       version string.  The first capturing group must match the
