@@ -8,8 +8,8 @@ die() {
 }
 
 
-if [ -z "${GITHUB_TOKEN}" ]; then
-  die "The GITHUB_TOKEN env var is missing."
+if [ -z "${INPUT_GITHUB_TOKEN}" ]; then
+  die "The INPUT_GITHUB_TOKEN env var is missing."
 fi
 
 if [ -z "${GITHUB_EVENT_PATH}" ]; then
@@ -17,7 +17,7 @@ if [ -z "${GITHUB_EVENT_PATH}" ]; then
 fi
 
 URI="https://api.github.com/graphql"
-AUTH_HEADER="Authorization: bearer ${GITHUB_TOKEN}"
+AUTH_HEADER="Authorization: bearer ${INPUT_GITHUB_TOKEN}"
 
 _prepare_graphql_query() {
   # Fold newlines and escape the quotes.
