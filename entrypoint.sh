@@ -73,7 +73,7 @@ EOF
                  | select(.node.name == \"${repo}\")
                  | .permission")
 
-  test "${perm}" == "MAINTAIN" -o "${perm}" == "ADMIN"
+  [[ "${perm}" = *MAINTAIN* || "${perm}" = *ADMIN* ]]
 }
 
 org="$(jqevent .organization.login)"
