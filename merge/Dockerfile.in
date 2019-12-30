@@ -1,0 +1,9 @@
+FROM alpine:3.10
+
+RUN apk add bash curl git gnupg jq
+
+COPY README.md entrypoint.sh /
+
+%%WRITE_SCRIPTS%%
+
+ENTRYPOINT ["/entrypoint.sh"]

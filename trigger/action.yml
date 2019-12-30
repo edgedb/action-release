@@ -1,0 +1,15 @@
+name: 'Trigger release flow'
+author: 'EdgeDB Inc.'
+inputs:
+  github_token:
+    description: Github API token.
+    required: true
+  release_validation_check:
+    required: true
+    description: |
+      The name of a workflow job that performs release PR validation in
+      the pull_request workflow.  This is used to restart the correct
+      check suite once the PR is approved.
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

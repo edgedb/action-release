@@ -20,6 +20,8 @@ inputs:
 outputs:
   version:
     description: The release version.
+  approved:
+    description: Whether the PR is approved.
 runs:
   using: 'docker'
   image: 'Dockerfile'

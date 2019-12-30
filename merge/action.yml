@@ -1,0 +1,33 @@
+name: 'Merge Release PR'
+description: 'Merges and tags release PRs'
+author: 'EdgeDB Inc.'
+inputs:
+  tag_name:
+    description: The name of the release tag to create.
+    required: true
+  tag_message:
+    description: |
+      The message of the release tag.  If not specified, the PR
+      body will be used.
+    required: false
+  github_username:
+    description: The name of the Github user to use for the merge.
+    required: true
+  github_token:
+    description: Github API token.
+    required: true
+  gpg_key:
+    required: false
+    description: GPG private key used to sign the tag.
+  gpg_key_id:
+    required: false
+    description: |
+      The id of a key used to sign the tag.  Specific subkeys
+      must end with '!'.  If not specified,
+      the master imported key would be used instead.
+  ssh_key:
+    description: SSH private key used to authenticate with Github.
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
