@@ -723,29 +723,52 @@ const github_1 = __webpack_require__(469);
 const parse_diff_1 = __importDefault(__webpack_require__(557));
 const request = __importStar(__webpack_require__(117));
 const pep440 = __importStar(__webpack_require__(398));
-function isMaintainer({ github, user, owner, repo }) {
+function isMaintainer({ github, user, owner, repo, teamName = '', accessLevel = 'MAINTAIN' }) {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield github.graphql(`
-    {
-      organization(login: "${owner}") {
-        teams(first: 100, userLogins: ["${user}"]) {
-          edges {
-            node {
-              name
-              repositories(first: 100, query: "${repo}") {
-                edges {
-                  node {
-                    name
+        const response = yield github.graphql(teamName !== '' ?
+            `
+      {
+        organization(login: "${owner}") {
+          teams(first: 100, query: "${teamName}") {
+            edges {
+              node {
+                name
+                repositories(first: 100, query: "${repo}") {
+                  edges {
+                    node {
+                      name
+                    }
+                    permission
                   }
-                  permission
                 }
               }
             }
           }
         }
       }
-    }
-    `);
+      `
+            :
+                `
+      {
+        organization(login: "${owner}") {
+          teams(first: 100, userLogins: ["${user}"]) {
+            edges {
+              node {
+                name
+                repositories(first: 100, query: "${repo}") {
+                  edges {
+                    node {
+                      name
+                    }
+                    permission
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `);
         const permissionMap = {
             NONE: 0,
             READ: 1,
@@ -754,17 +777,21 @@ function isMaintainer({ github, user, owner, repo }) {
             MAINTAIN: 4,
             ADMIN: 5
         };
+        const requiredPermission = (permissionMap[accessLevel !== '' ? accessLevel : 'MAINTAIN']);
         const teams = response.organization.teams.edges;
         let permission = 0;
         for (const team of teams) {
             const repos = team.node.repositories.edges;
+            if (teamName !== '' && team.node.name !== teamName) {
+                continue;
+            }
             for (const teamRepo of repos) {
                 if (teamRepo.node.name == repo) {
                     const repoPermissionString = teamRepo.permission;
                     const repoPermission = permissionMap[repoPermissionString];
                     if (repoPermission > permission) {
                         permission = repoPermission;
-                        if (permission >= permissionMap['MAINTAIN']) {
+                        if (permission >= requiredPermission) {
                             return true;
                         }
                     }
@@ -845,16 +872,36 @@ function isApproved(github, pullRequest) {
             pull_number: pullRequest.number
         });
         const requestedReviewers = new Set(requestedReviews.data.users.map(user => user.login));
+        const requireTeam = core.getInput('require_team');
+        const requireAccessLevel = core.getInput('require_access_level');
         for (const review of reviews.data) {
             const reviewer = review.user.login;
             const state = review.state;
-            if (isMaintainer({ github, owner, repo, user: reviewer }) &&
+            if (isMaintainer({
+                github,
+                owner,
+                repo,
+                user: reviewer,
+                teamName: requireTeam,
+                accessLevel: requireAccessLevel
+            }) &&
                 state == 'APPROVED' &&
                 !requestedReviewers.has(reviewer)) {
-                return 'true';
+                return true;
             }
         }
-        return 'false';
+        return false;
+    });
+}
+function approve({ github, owner, repo, pullRequest }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield github.pulls.createReview({
+            owner,
+            repo,
+            pull_number: pullRequest.number,
+            event: 'APPROVE'
+        });
+        return true;
     });
 }
 function run() {
@@ -863,6 +910,9 @@ function run() {
             const verFile = core.getInput('version_file', { required: true });
             const verPattern = core.getInput('version_line_pattern', { required: true });
             const token = core.getInput('github_token', { required: true });
+            const requireApproval = core.getInput('require_approval');
+            const requireTeam = core.getInput('require_team');
+            const requireAccessLevel = core.getInput('require_access_level');
             const github = new github_1.GitHub(token);
             const { owner, repo } = github_1.context.repo;
             const pullRequest = github_1.context.payload.pull_request;
@@ -870,14 +920,32 @@ function run() {
                 throw new Error('Not a pull request event.');
             }
             const submitter = pullRequest.user.login;
-            if (!(yield isMaintainer({ github, user: submitter, owner, repo }))) {
+            if (!(yield isMaintainer({
+                github,
+                user: submitter,
+                owner,
+                repo,
+                teamName: requireTeam,
+                accessLevel: requireAccessLevel
+            }))) {
                 core.setFailed(`User ${submitter} does not belong to any team that is ` +
                     `authorized to make releases in the "${repo}" repository`);
             }
-            const diffText = yield request.get(pullRequest.diff_url);
-            const version = getVersionFromDiff(diffText, verFile, verPattern);
-            core.setOutput('version', version);
-            core.setOutput('approved', yield isApproved(github, pullRequest));
+            else {
+                const diffText = yield request.get(pullRequest.diff_url);
+                const version = getVersionFromDiff(diffText, verFile, verPattern);
+                core.setOutput('version', version);
+                let approved = 'false';
+                if (yield isApproved(github, pullRequest)) {
+                    approved = 'true';
+                }
+                else if (requireApproval === 'no') {
+                    yield approve({ github, owner, repo, pullRequest });
+                    // Recheck the approval status
+                    approved = (yield isApproved(github, pullRequest)) ? 'true' : 'false';
+                }
+                core.setOutput('approved', approved);
+            }
         }
         catch (error) {
             core.setFailed(error.message);
@@ -11057,19 +11125,7 @@ exports.debug = debug // for test
 /* 245 */,
 /* 246 */,
 /* 247 */,
-/* 248 */
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-module.exports = octokitRegisterEndpoints;
-
-const registerEndpoints = __webpack_require__(899);
-
-function octokitRegisterEndpoints(octokit) {
-  octokit.registerEndpoints = registerEndpoints.bind(null, octokit);
-}
-
-
-/***/ }),
+/* 248 */,
 /* 249 */
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -17444,7 +17500,7 @@ module.exports = {
   properties: __webpack_require__(343),
   propertyNames: __webpack_require__(706),
   required: __webpack_require__(858),
-  uniqueItems: __webpack_require__(434),
+  uniqueItems: __webpack_require__(899),
   validate: __webpack_require__(967)
 };
 
@@ -17898,7 +17954,13 @@ module.exports = readShebang;
 /***/ }),
 /* 390 */,
 /* 391 */,
-/* 392 */,
+/* 392 */
+/***/ (function() {
+
+eval("require")("./plugins/register-endpoints");
+
+
+/***/ }),
 /* 393 */,
 /* 394 */,
 /* 395 */,
@@ -21032,99 +21094,7 @@ function dumpException(ex)
 
 /***/ }),
 /* 433 */,
-/* 434 */
-/***/ (function(module) {
-
-"use strict";
-
-module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
-  var out = ' ';
-  var $lvl = it.level;
-  var $dataLvl = it.dataLevel;
-  var $schema = it.schema[$keyword];
-  var $schemaPath = it.schemaPath + it.util.getProperty($keyword);
-  var $errSchemaPath = it.errSchemaPath + '/' + $keyword;
-  var $breakOnError = !it.opts.allErrors;
-  var $data = 'data' + ($dataLvl || '');
-  var $valid = 'valid' + $lvl;
-  var $isData = it.opts.$data && $schema && $schema.$data,
-    $schemaValue;
-  if ($isData) {
-    out += ' var schema' + ($lvl) + ' = ' + (it.util.getData($schema.$data, $dataLvl, it.dataPathArr)) + '; ';
-    $schemaValue = 'schema' + $lvl;
-  } else {
-    $schemaValue = $schema;
-  }
-  if (($schema || $isData) && it.opts.uniqueItems !== false) {
-    if ($isData) {
-      out += ' var ' + ($valid) + '; if (' + ($schemaValue) + ' === false || ' + ($schemaValue) + ' === undefined) ' + ($valid) + ' = true; else if (typeof ' + ($schemaValue) + ' != \'boolean\') ' + ($valid) + ' = false; else { ';
-    }
-    out += ' var i = ' + ($data) + '.length , ' + ($valid) + ' = true , j; if (i > 1) { ';
-    var $itemType = it.schema.items && it.schema.items.type,
-      $typeIsArray = Array.isArray($itemType);
-    if (!$itemType || $itemType == 'object' || $itemType == 'array' || ($typeIsArray && ($itemType.indexOf('object') >= 0 || $itemType.indexOf('array') >= 0))) {
-      out += ' outer: for (;i--;) { for (j = i; j--;) { if (equal(' + ($data) + '[i], ' + ($data) + '[j])) { ' + ($valid) + ' = false; break outer; } } } ';
-    } else {
-      out += ' var itemIndices = {}, item; for (;i--;) { var item = ' + ($data) + '[i]; ';
-      var $method = 'checkDataType' + ($typeIsArray ? 's' : '');
-      out += ' if (' + (it.util[$method]($itemType, 'item', true)) + ') continue; ';
-      if ($typeIsArray) {
-        out += ' if (typeof item == \'string\') item = \'"\' + item; ';
-      }
-      out += ' if (typeof itemIndices[item] == \'number\') { ' + ($valid) + ' = false; j = itemIndices[item]; break; } itemIndices[item] = i; } ';
-    }
-    out += ' } ';
-    if ($isData) {
-      out += '  }  ';
-    }
-    out += ' if (!' + ($valid) + ') {   ';
-    var $$outStack = $$outStack || [];
-    $$outStack.push(out);
-    out = ''; /* istanbul ignore else */
-    if (it.createErrors !== false) {
-      out += ' { keyword: \'' + ('uniqueItems') + '\' , dataPath: (dataPath || \'\') + ' + (it.errorPath) + ' , schemaPath: ' + (it.util.toQuotedString($errSchemaPath)) + ' , params: { i: i, j: j } ';
-      if (it.opts.messages !== false) {
-        out += ' , message: \'should NOT have duplicate items (items ## \' + j + \' and \' + i + \' are identical)\' ';
-      }
-      if (it.opts.verbose) {
-        out += ' , schema:  ';
-        if ($isData) {
-          out += 'validate.schema' + ($schemaPath);
-        } else {
-          out += '' + ($schema);
-        }
-        out += '         , parentSchema: validate.schema' + (it.schemaPath) + ' , data: ' + ($data) + ' ';
-      }
-      out += ' } ';
-    } else {
-      out += ' {} ';
-    }
-    var __err = out;
-    out = $$outStack.pop();
-    if (!it.compositeRule && $breakOnError) {
-      /* istanbul ignore if */
-      if (it.async) {
-        out += ' throw new ValidationError([' + (__err) + ']); ';
-      } else {
-        out += ' validate.errors = [' + (__err) + ']; return false; ';
-      }
-    } else {
-      out += ' var err = ' + (__err) + ';  if (vErrors === null) vErrors = [err]; else vErrors.push(err); errors++; ';
-    }
-    out += ' } ';
-    if ($breakOnError) {
-      out += ' else { ';
-    }
-  } else {
-    if ($breakOnError) {
-      out += ' if (true) { ';
-    }
-  }
-  return out;
-}
-
-
-/***/ }),
+/* 434 */,
 /* 435 */,
 /* 436 */,
 /* 437 */,
@@ -30725,7 +30695,7 @@ const CORE_PLUGINS = [
   __webpack_require__(19), // deprecated: remove in v17
   __webpack_require__(190),
   __webpack_require__(148),
-  __webpack_require__(248),
+  __webpack_require__(392),
   __webpack_require__(586),
   __webpack_require__(430),
 
@@ -46927,105 +46897,94 @@ module.exports = function (object, opts) {
 /***/ }),
 /* 898 */,
 /* 899 */
-/***/ (function(module, __unusedexports, __webpack_require__) {
+/***/ (function(module) {
 
-module.exports = registerEndpoints;
+"use strict";
 
-const { Deprecation } = __webpack_require__(692);
-
-function registerEndpoints(octokit, routes) {
-  Object.keys(routes).forEach(namespaceName => {
-    if (!octokit[namespaceName]) {
-      octokit[namespaceName] = {};
+module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
+  var out = ' ';
+  var $lvl = it.level;
+  var $dataLvl = it.dataLevel;
+  var $schema = it.schema[$keyword];
+  var $schemaPath = it.schemaPath + it.util.getProperty($keyword);
+  var $errSchemaPath = it.errSchemaPath + '/' + $keyword;
+  var $breakOnError = !it.opts.allErrors;
+  var $data = 'data' + ($dataLvl || '');
+  var $valid = 'valid' + $lvl;
+  var $isData = it.opts.$data && $schema && $schema.$data,
+    $schemaValue;
+  if ($isData) {
+    out += ' var schema' + ($lvl) + ' = ' + (it.util.getData($schema.$data, $dataLvl, it.dataPathArr)) + '; ';
+    $schemaValue = 'schema' + $lvl;
+  } else {
+    $schemaValue = $schema;
+  }
+  if (($schema || $isData) && it.opts.uniqueItems !== false) {
+    if ($isData) {
+      out += ' var ' + ($valid) + '; if (' + ($schemaValue) + ' === false || ' + ($schemaValue) + ' === undefined) ' + ($valid) + ' = true; else if (typeof ' + ($schemaValue) + ' != \'boolean\') ' + ($valid) + ' = false; else { ';
     }
-
-    Object.keys(routes[namespaceName]).forEach(apiName => {
-      const apiOptions = routes[namespaceName][apiName];
-
-      const endpointDefaults = ["method", "url", "headers"].reduce(
-        (map, key) => {
-          if (typeof apiOptions[key] !== "undefined") {
-            map[key] = apiOptions[key];
-          }
-
-          return map;
-        },
-        {}
-      );
-
-      endpointDefaults.request = {
-        validate: apiOptions.params
-      };
-
-      let request = octokit.request.defaults(endpointDefaults);
-
-      // patch request & endpoint methods to support deprecated parameters.
-      // Not the most elegant solution, but we don’t want to move deprecation
-      // logic into octokit/endpoint.js as it’s out of scope
-      const hasDeprecatedParam = Object.keys(apiOptions.params || {}).find(
-        key => apiOptions.params[key].deprecated
-      );
-      if (hasDeprecatedParam) {
-        const patch = patchForDeprecation.bind(null, octokit, apiOptions);
-        request = patch(
-          octokit.request.defaults(endpointDefaults),
-          `.${namespaceName}.${apiName}()`
-        );
-        request.endpoint = patch(
-          request.endpoint,
-          `.${namespaceName}.${apiName}.endpoint()`
-        );
-        request.endpoint.merge = patch(
-          request.endpoint.merge,
-          `.${namespaceName}.${apiName}.endpoint.merge()`
-        );
+    out += ' var i = ' + ($data) + '.length , ' + ($valid) + ' = true , j; if (i > 1) { ';
+    var $itemType = it.schema.items && it.schema.items.type,
+      $typeIsArray = Array.isArray($itemType);
+    if (!$itemType || $itemType == 'object' || $itemType == 'array' || ($typeIsArray && ($itemType.indexOf('object') >= 0 || $itemType.indexOf('array') >= 0))) {
+      out += ' outer: for (;i--;) { for (j = i; j--;) { if (equal(' + ($data) + '[i], ' + ($data) + '[j])) { ' + ($valid) + ' = false; break outer; } } } ';
+    } else {
+      out += ' var itemIndices = {}, item; for (;i--;) { var item = ' + ($data) + '[i]; ';
+      var $method = 'checkDataType' + ($typeIsArray ? 's' : '');
+      out += ' if (' + (it.util[$method]($itemType, 'item', true)) + ') continue; ';
+      if ($typeIsArray) {
+        out += ' if (typeof item == \'string\') item = \'"\' + item; ';
       }
-
-      if (apiOptions.deprecated) {
-        octokit[namespaceName][apiName] = function deprecatedEndpointMethod() {
-          octokit.log.warn(
-            new Deprecation(`[@octokit/rest] ${apiOptions.deprecated}`)
-          );
-          octokit[namespaceName][apiName] = request;
-          return request.apply(null, arguments);
-        };
-
-        return;
+      out += ' if (typeof itemIndices[item] == \'number\') { ' + ($valid) + ' = false; j = itemIndices[item]; break; } itemIndices[item] = i; } ';
+    }
+    out += ' } ';
+    if ($isData) {
+      out += '  }  ';
+    }
+    out += ' if (!' + ($valid) + ') {   ';
+    var $$outStack = $$outStack || [];
+    $$outStack.push(out);
+    out = ''; /* istanbul ignore else */
+    if (it.createErrors !== false) {
+      out += ' { keyword: \'' + ('uniqueItems') + '\' , dataPath: (dataPath || \'\') + ' + (it.errorPath) + ' , schemaPath: ' + (it.util.toQuotedString($errSchemaPath)) + ' , params: { i: i, j: j } ';
+      if (it.opts.messages !== false) {
+        out += ' , message: \'should NOT have duplicate items (items ## \' + j + \' and \' + i + \' are identical)\' ';
       }
-
-      octokit[namespaceName][apiName] = request;
-    });
-  });
-}
-
-function patchForDeprecation(octokit, apiOptions, method, methodName) {
-  const patchedMethod = options => {
-    options = Object.assign({}, options);
-
-    Object.keys(options).forEach(key => {
-      if (apiOptions.params[key] && apiOptions.params[key].deprecated) {
-        const aliasKey = apiOptions.params[key].alias;
-
-        octokit.log.warn(
-          new Deprecation(
-            `[@octokit/rest] "${key}" parameter is deprecated for "${methodName}". Use "${aliasKey}" instead`
-          )
-        );
-
-        if (!(aliasKey in options)) {
-          options[aliasKey] = options[key];
+      if (it.opts.verbose) {
+        out += ' , schema:  ';
+        if ($isData) {
+          out += 'validate.schema' + ($schemaPath);
+        } else {
+          out += '' + ($schema);
         }
-        delete options[key];
+        out += '         , parentSchema: validate.schema' + (it.schemaPath) + ' , data: ' + ($data) + ' ';
       }
-    });
-
-    return method(options);
-  };
-  Object.keys(method).forEach(key => {
-    patchedMethod[key] = method[key];
-  });
-
-  return patchedMethod;
+      out += ' } ';
+    } else {
+      out += ' {} ';
+    }
+    var __err = out;
+    out = $$outStack.pop();
+    if (!it.compositeRule && $breakOnError) {
+      /* istanbul ignore if */
+      if (it.async) {
+        out += ' throw new ValidationError([' + (__err) + ']); ';
+      } else {
+        out += ' validate.errors = [' + (__err) + ']; return false; ';
+      }
+    } else {
+      out += ' var err = ' + (__err) + ';  if (vErrors === null) vErrors = [err]; else vErrors.push(err); errors++; ';
+    }
+    out += ' } ';
+    if ($breakOnError) {
+      out += ' else { ';
+    }
+  } else {
+    if ($breakOnError) {
+      out += ' if (true) { ';
+    }
+  }
+  return out;
 }
 
 

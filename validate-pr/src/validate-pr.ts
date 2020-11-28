@@ -8,34 +8,63 @@ async function isMaintainer({
   github,
   user,
   owner,
-  repo
+  repo,
+  teamName = '',
+  accessLevel = 'MAINTAIN'
 }: {
   github: GitHub
   user: string
   owner: string
   repo: string
+  teamName?: string
+  accessLevel?: string
 }): Promise<boolean> {
-  const response = await github.graphql(`
-    {
-      organization(login: "${owner}") {
-        teams(first: 100, userLogins: ["${user}"]) {
-          edges {
-            node {
-              name
-              repositories(first: 100, query: "${repo}") {
-                edges {
-                  node {
-                    name
+  const response = await github.graphql(
+    teamName !== '' ?
+      `
+      {
+        organization(login: "${owner}") {
+          teams(first: 100, query: "${teamName}") {
+            edges {
+              node {
+                name
+                repositories(first: 100, query: "${repo}") {
+                  edges {
+                    node {
+                      name
+                    }
+                    permission
                   }
-                  permission
                 }
               }
             }
           }
         }
       }
-    }
-    `)
+      `
+      :
+      `
+      {
+        organization(login: "${owner}") {
+          teams(first: 100, userLogins: ["${user}"]) {
+            edges {
+              node {
+                name
+                repositories(first: 100, query: "${repo}") {
+                  edges {
+                    node {
+                      name
+                    }
+                    permission
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `
+    )
 
   interface PermissionMap {
     [key: string]: number
@@ -50,17 +79,22 @@ async function isMaintainer({
     ADMIN: 5
   }
 
+  const requiredPermission = (
+    permissionMap[accessLevel !== '' ? accessLevel : 'MAINTAIN']);
   const teams: Array<any> = response.organization.teams.edges
   let permission = 0
   for (const team of teams) {
     const repos = team.node.repositories.edges
+    if (teamName !== '' && team.node.name !== teamName) {
+      continue;
+    }
     for (const teamRepo of repos) {
       if (teamRepo.node.name == repo) {
         const repoPermissionString: string = teamRepo.permission
         const repoPermission = permissionMap[repoPermissionString]
         if (repoPermission > permission) {
           permission = repoPermission
-          if (permission >= permissionMap['MAINTAIN']) {
+          if (permission >= requiredPermission) {
             return true
           }
         }
@@ -152,7 +186,7 @@ function getVersionFromDiff(
 async function isApproved(
   github: GitHub,
   pullRequest: {[key: string]: any}
-): Promise<string> {
+): Promise<boolean> {
   const owner = pullRequest.base.repo.owner.login
   const repo = pullRequest.base.repo.name
 
@@ -172,20 +206,50 @@ async function isApproved(
     requestedReviews.data.users.map(user => user.login)
   )
 
+  const requireTeam = core.getInput('require_team')
+  const requireAccessLevel = core.getInput('require_access_level')
+
   for (const review of reviews.data) {
     const reviewer = review.user.login
     const state = review.state
 
     if (
-      isMaintainer({github, owner, repo, user: reviewer}) &&
+      isMaintainer({
+        github,
+        owner,
+        repo,
+        user: reviewer,
+        teamName: requireTeam,
+        accessLevel: requireAccessLevel
+      }) &&
       state == 'APPROVED' &&
       !requestedReviewers.has(reviewer)
     ) {
-      return 'true'
+      return true
     }
   }
 
-  return 'false'
+  return false
+}
+
+async function approve({
+  github,
+  owner,
+  repo,
+  pullRequest
+}: {
+  github: GitHub,
+  owner: string,
+  repo: string,
+  pullRequest: {[key: string]: any}
+}): Promise<boolean> {
+  await github.pulls.createReview({
+    owner,
+    repo,
+    pull_number: pullRequest.number,
+    event: 'APPROVE'
+  })
+  return true
 }
 
 async function run() {
@@ -193,6 +257,9 @@ async function run() {
     const verFile = core.getInput('version_file', {required: true})
     const verPattern = core.getInput('version_line_pattern', {required: true})
     const token = core.getInput('github_token', {required: true})
+    const requireApproval = core.getInput('require_approval')
+    const requireTeam = core.getInput('require_team')
+    const requireAccessLevel = core.getInput('require_access_level')
 
     const github = new GitHub(token)
     const {owner, repo} = context.repo
@@ -204,18 +271,35 @@ async function run() {
 
     const submitter = pullRequest.user.login
 
-    if (!(await isMaintainer({github, user: submitter, owner, repo}))) {
+    if (!(await isMaintainer({
+      github,
+      user: submitter,
+      owner,
+      repo,
+      teamName: requireTeam,
+      accessLevel: requireAccessLevel
+    }))) {
       core.setFailed(
         `User ${submitter} does not belong to any team that is ` +
           `authorized to make releases in the "${repo}" repository`
       )
+    } else {
+      const diffText = await request.get(pullRequest.diff_url)
+
+      const version = getVersionFromDiff(diffText, verFile, verPattern)
+      core.setOutput('version', version)
+      let approved = 'false'
+
+      if (await isApproved(github, pullRequest)) {
+        approved = 'true'
+      } else if (requireApproval === 'no') {
+        await approve({github, owner, repo, pullRequest})
+        // Recheck the approval status
+        approved = await isApproved(github, pullRequest) ? 'true' : 'false'
+      }
+
+      core.setOutput('approved', approved)
     }
-
-    const diffText = await request.get(pullRequest.diff_url)
-
-    const version = getVersionFromDiff(diffText, verFile, verPattern)
-    core.setOutput('version', version)
-    core.setOutput('approved', await isApproved(github, pullRequest))
   } catch (error) {
     core.setFailed(error.message)
   }

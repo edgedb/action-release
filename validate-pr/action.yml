@@ -6,7 +6,7 @@ inputs:
     description: Github API token.
     required: true
   version_file:
-    description: Path to the file contaning the version string.
+    description: Path to the file containing the version string.
     required: true
   version_line_pattern:
     description: |
@@ -16,6 +16,19 @@ inputs:
       contain [[:PEP440:]] and [[:SEMVER:]] magic "classes" that match
       Python and SemVer versions correspondingly.
     required: true
+  require_approval:
+    description: |
+      Whether an explicit approval from another maintainer is required.
+    default: 'yes'
+  require_team:
+    description: |
+      Require membership in the specified team.
+  require_access_level:
+    description: |
+      Require a specific repository access level for the team that the
+      PR submitter is a member of.  Applies to *require_team*, if specified,
+      otherwise membership in any team with adequate access is sufficient.
+    default: MAINTAIN
 outputs:
   version:
     description: The release version.
