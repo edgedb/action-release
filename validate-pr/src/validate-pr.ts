@@ -1,25 +1,26 @@
 import * as core from '@actions/core'
-import {GitHub, context} from '@actions/github'
+import * as github from '@actions/github'
 import parseDiff from 'parse-diff'
 import * as request from 'request-promise-native'
 import * as pep440 from '@renovate/pep440'
+import * as githubGraphql from './generated/graphql'
 
 async function isMaintainer({
-  github,
+  octokit,
   user,
   owner,
   repo,
   teamName = '',
   accessLevel = 'MAINTAIN'
 }: {
-  github: GitHub
+  octokit: ReturnType<typeof github.getOctokit>
   user: string
   owner: string
   repo: string
   teamName?: string
   accessLevel?: string
 }): Promise<boolean> {
-  const response = await github.graphql(
+  const response = await octokit.graphql<{organization: githubGraphql.Organization}>(
     teamName !== '' ?
       `
       {
@@ -81,21 +82,23 @@ async function isMaintainer({
 
   const requiredPermission = (
     permissionMap[accessLevel !== '' ? accessLevel : 'MAINTAIN']);
-  const teams: Array<any> = response.organization.teams.edges
+  const teams = response.organization.teams.edges
   let permission = 0
-  for (const team of teams) {
-    const repos = team.node.repositories.edges
-    if (teamName !== '' && team.node.name !== teamName) {
-      continue;
-    }
-    for (const teamRepo of repos) {
-      if (teamRepo.node.name == repo) {
-        const repoPermissionString: string = teamRepo.permission
-        const repoPermission = permissionMap[repoPermissionString]
-        if (repoPermission > permission) {
-          permission = repoPermission
-          if (permission >= requiredPermission) {
-            return true
+  if (teams) {
+    for (const team of teams) {
+      const repos = team?.node?.repositories.edges
+      if (!repos || (teamName !== '' && team?.node?.name !== teamName)) {
+        continue;
+      }
+      for (const teamRepo of repos) {
+        if (teamRepo?.node.name == repo) {
+          const repoPermissionString: string = teamRepo.permission
+          const repoPermission = permissionMap[repoPermissionString]
+          if (repoPermission > permission) {
+            permission = repoPermission
+            if (permission >= requiredPermission) {
+              return true
+            }
           }
         }
       }
@@ -184,26 +187,26 @@ function getVersionFromDiff(
 }
 
 async function isApproved(
-  github: GitHub,
+  octokit: ReturnType<typeof github.getOctokit>,
   pullRequest: {[key: string]: any}
 ): Promise<boolean> {
   const owner = pullRequest.base.repo.owner.login
   const repo = pullRequest.base.repo.name
 
-  const reviews = await github.pulls.listReviews({
+  const reviews = await octokit.pulls.listReviews({
     owner,
     repo,
     pull_number: pullRequest.number
   })
 
-  const requestedReviews = await github.pulls.listReviewRequests({
+  const requestedReviewers = await octokit.pulls.listRequestedReviewers({
     owner,
     repo,
     pull_number: pullRequest.number
   })
 
-  const requestedReviewers = new Set(
-    requestedReviews.data.users.map(user => user.login)
+  const requestedReviewerNames = new Set(
+    requestedReviewers.data.users.map(user => user.login)
   )
 
   const requireTeam = core.getInput('require_team')
@@ -215,7 +218,7 @@ async function isApproved(
 
     if (
       isMaintainer({
-        github,
+        octokit,
         owner,
         repo,
         user: reviewer,
@@ -223,7 +226,7 @@ async function isApproved(
         accessLevel: requireAccessLevel
       }) &&
       state == 'APPROVED' &&
-      !requestedReviewers.has(reviewer)
+      !requestedReviewerNames.has(reviewer)
     ) {
       return true
     }
@@ -233,17 +236,17 @@ async function isApproved(
 }
 
 async function approve({
-  github,
+  octokit,
   owner,
   repo,
   pullRequest
 }: {
-  github: GitHub,
+  octokit: ReturnType<typeof github.getOctokit>,
   owner: string,
   repo: string,
   pullRequest: {[key: string]: any}
 }): Promise<boolean> {
-  await github.pulls.createReview({
+  await octokit.pulls.createReview({
     owner,
     repo,
     pull_number: pullRequest.number,
@@ -261,9 +264,9 @@ async function run() {
     const requireTeam = core.getInput('require_team')
     const requireAccessLevel = core.getInput('require_access_level')
 
-    const github = new GitHub(token)
-    const {owner, repo} = context.repo
-    const pullRequest = context.payload.pull_request
+    const octokit = github.getOctokit(token)
+    const {owner, repo} = github.context.repo
+    const pullRequest = github.context.payload.pull_request
 
     if (!pullRequest) {
       throw new Error('Not a pull request event.')
@@ -272,7 +275,7 @@ async function run() {
     const submitter = pullRequest.user.login
 
     if (!(await isMaintainer({
-      github,
+      octokit,
       user: submitter,
       owner,
       repo,
@@ -290,12 +293,12 @@ async function run() {
       core.setOutput('version', version)
       let approved = 'false'
 
-      if (await isApproved(github, pullRequest)) {
+      if (await isApproved(octokit, pullRequest)) {
         approved = 'true'
       } else if (requireApproval === 'no') {
-        await approve({github, owner, repo, pullRequest})
+        await approve({octokit, owner, repo, pullRequest})
         // Recheck the approval status
-        approved = await isApproved(github, pullRequest) ? 'true' : 'false'
+        approved = await isApproved(octokit, pullRequest) ? 'true' : 'false'
       }
 
       core.setOutput('approved', approved)
