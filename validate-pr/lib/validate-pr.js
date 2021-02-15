@@ -39,11 +39,11 @@ const pep440 = __importStar(require("@renovate/pep440"));
 function isMaintainer({ octokit, user, owner, repo, teamName = '', accessLevel = 'MAINTAIN' }) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield octokit.graphql(teamName !== '' ?
-            `
+        const response = yield octokit.graphql(teamName !== ''
+            ? `
       {
         organization(login: "${owner}") {
-          teams(first: 100, query: "${teamName}") {
+          teams(first: 100, userLogins: ["${user}"], query: "${teamName}") {
             edges {
               node {
                 name
@@ -61,8 +61,7 @@ function isMaintainer({ octokit, user, owner, repo, teamName = '', accessLevel =
         }
       }
       `
-            :
-                `
+            : `
       {
         organization(login: "${owner}") {
           teams(first: 100, userLogins: ["${user}"]) {
@@ -91,7 +90,7 @@ function isMaintainer({ octokit, user, owner, repo, teamName = '', accessLevel =
             MAINTAIN: 4,
             ADMIN: 5
         };
-        const requiredPermission = (permissionMap[accessLevel !== '' ? accessLevel : 'MAINTAIN']);
+        const requiredPermission = permissionMap[accessLevel !== '' ? accessLevel : 'MAINTAIN'];
         const teams = response.organization.teams.edges;
         let permission = 0;
         if (teams) {

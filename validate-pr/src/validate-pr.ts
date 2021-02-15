@@ -20,12 +20,14 @@ async function isMaintainer({
   teamName?: string
   accessLevel?: string
 }): Promise<boolean> {
-  const response = await octokit.graphql<{organization: githubGraphql.Organization}>(
-    teamName !== '' ?
-      `
+  const response = await octokit.graphql<{
+    organization: githubGraphql.Organization
+  }>(
+    teamName !== ''
+      ? `
       {
         organization(login: "${owner}") {
-          teams(first: 100, query: "${teamName}") {
+          teams(first: 100, userLogins: ["${user}"], query: "${teamName}") {
             edges {
               node {
                 name
@@ -43,8 +45,7 @@ async function isMaintainer({
         }
       }
       `
-      :
-      `
+      : `
       {
         organization(login: "${owner}") {
           teams(first: 100, userLogins: ["${user}"]) {
@@ -65,7 +66,7 @@ async function isMaintainer({
         }
       }
       `
-    )
+  )
 
   interface PermissionMap {
     [key: string]: number
@@ -80,15 +81,15 @@ async function isMaintainer({
     ADMIN: 5
   }
 
-  const requiredPermission = (
-    permissionMap[accessLevel !== '' ? accessLevel : 'MAINTAIN']);
+  const requiredPermission =
+    permissionMap[accessLevel !== '' ? accessLevel : 'MAINTAIN']
   const teams = response.organization.teams.edges
   let permission = 0
   if (teams) {
     for (const team of teams) {
       const repos = team?.node?.repositories.edges
       if (!repos || (teamName !== '' && team?.node?.name !== teamName)) {
-        continue;
+        continue
       }
       for (const teamRepo of repos) {
         if (teamRepo?.node.name == repo) {
@@ -241,9 +242,9 @@ async function approve({
   repo,
   pullRequest
 }: {
-  octokit: ReturnType<typeof github.getOctokit>,
-  owner: string,
-  repo: string,
+  octokit: ReturnType<typeof github.getOctokit>
+  owner: string
+  repo: string
   pullRequest: {[key: string]: any}
 }): Promise<boolean> {
   await octokit.pulls.createReview({
@@ -274,14 +275,16 @@ async function run() {
 
     const submitter = pullRequest.user.login
 
-    if (!(await isMaintainer({
-      octokit,
-      user: submitter,
-      owner,
-      repo,
-      teamName: requireTeam,
-      accessLevel: requireAccessLevel
-    }))) {
+    if (
+      !(await isMaintainer({
+        octokit,
+        user: submitter,
+        owner,
+        repo,
+        teamName: requireTeam,
+        accessLevel: requireAccessLevel
+      }))
+    ) {
       core.setFailed(
         `User ${submitter} does not belong to any team that is ` +
           `authorized to make releases in the "${repo}" repository`
@@ -298,7 +301,7 @@ async function run() {
       } else if (requireApproval === 'no') {
         await approve({octokit, owner, repo, pullRequest})
         // Recheck the approval status
-        approved = await isApproved(octokit, pullRequest) ? 'true' : 'false'
+        approved = (await isApproved(octokit, pullRequest)) ? 'true' : 'false'
       }
 
       core.setOutput('approved', approved)
