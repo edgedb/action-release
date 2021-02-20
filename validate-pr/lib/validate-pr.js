@@ -126,7 +126,7 @@ const SEMVER = '(0|[1-9]\\d*).(0|[1-9]\\d*)\\.(0|[1-9]\\d*)' +
     '(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)' +
     '(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?' +
     '(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?';
-function getVersionFromDiff(diffText, verFile, verPattern) {
+function getVersionFromDiff(diffText, verFile, verPattern, verDiffRequired) {
     let regexp = new RegExp(verPattern
         .replace('[[:PEP440:]]', PEP440_VERSION)
         .replace('[[:SEMVER:]]', SEMVER));
@@ -157,7 +157,12 @@ function getVersionFromDiff(diffText, verFile, verPattern) {
         }
     }
     if (newVersion === '') {
-        throw new Error('the diff does not contain a hunk matching the version expression');
+        if (verDiffRequired) {
+            throw new Error('the diff does not contain a hunk matching the version expression');
+        }
+        else {
+            return newVersion;
+        }
     }
     if (oldVersion !== '') {
         if (verPattern.includes('[[:PEP440:]]') ||
@@ -228,6 +233,7 @@ function run() {
             const requireApproval = core.getInput('require_approval');
             const requireTeam = core.getInput('require_team');
             const requireAccessLevel = core.getInput('require_access_level');
+            const verDiffRequired = core.getInput('missing_version_ok') !== 'yes';
             const octokit = github.getOctokit(token);
             const { owner, repo } = github.context.repo;
             const pullRequest = github.context.payload.pull_request;
@@ -248,8 +254,11 @@ function run() {
             }
             else {
                 const diffText = yield request.get(pullRequest.diff_url);
-                const version = getVersionFromDiff(diffText, verFile, verPattern);
+                const version = getVersionFromDiff(diffText, verFile, verPattern, verDiffRequired);
                 core.setOutput('version', version);
+                if (version === '') {
+                    return;
+                }
                 let approved = 'false';
                 if (yield isApproved(octokit, pullRequest)) {
                     approved = 'true';

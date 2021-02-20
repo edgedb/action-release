@@ -16,6 +16,11 @@ inputs:
       contain [[:PEP440:]] and [[:SEMVER:]] magic "classes" that match
       Python and SemVer versions correspondingly.
     required: true
+  missing_version_ok:
+    description: |
+      Whether the absence of a version change in the PR diff is considered
+      an error.
+    default: 'no'
   require_approval:
     description: |
       Whether an explicit approval from another maintainer is required.

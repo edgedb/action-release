@@ -128,7 +128,8 @@ const SEMVER =
 function getVersionFromDiff(
   diffText: string,
   verFile: string,
-  verPattern: string
+  verPattern: string,
+  verDiffRequired: boolean
 ): string {
   let regexp = new RegExp(
     verPattern
@@ -166,9 +167,13 @@ function getVersionFromDiff(
   }
 
   if (newVersion === '') {
-    throw new Error(
-      'the diff does not contain a hunk matching the version expression'
-    )
+    if (verDiffRequired) {
+      throw new Error(
+        'the diff does not contain a hunk matching the version expression'
+      )
+    } else {
+      return newVersion
+    }
   }
 
   if (oldVersion !== '') {
@@ -264,6 +269,7 @@ async function run() {
     const requireApproval = core.getInput('require_approval')
     const requireTeam = core.getInput('require_team')
     const requireAccessLevel = core.getInput('require_access_level')
+    const verDiffRequired = core.getInput('missing_version_ok') !== 'yes'
 
     const octokit = github.getOctokit(token)
     const {owner, repo} = github.context.repo
@@ -292,8 +298,16 @@ async function run() {
     } else {
       const diffText = await request.get(pullRequest.diff_url)
 
-      const version = getVersionFromDiff(diffText, verFile, verPattern)
+      const version = getVersionFromDiff(
+        diffText,
+        verFile,
+        verPattern,
+        verDiffRequired
+      )
       core.setOutput('version', version)
+      if (version === '') {
+        return
+      }
       let approved = 'false'
 
       if (await isApproved(octokit, pullRequest)) {
