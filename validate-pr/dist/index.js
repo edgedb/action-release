@@ -263,7 +263,12 @@ function run() {
             const { owner, repo } = github.context.repo;
             const pullRequest = github.context.payload.pull_request;
             if (!pullRequest) {
-                throw new Error('Not a pull request event.');
+                if (verDiffRequired) {
+                    throw new Error('Not a pull request event.');
+                }
+                else {
+                    return;
+                }
             }
             const submitter = pullRequest.user.login;
             if (!(yield isMaintainer({

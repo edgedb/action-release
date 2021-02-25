@@ -276,7 +276,11 @@ async function run() {
     const pullRequest = github.context.payload.pull_request
 
     if (!pullRequest) {
-      throw new Error('Not a pull request event.')
+      if (verDiffRequired) {
+        throw new Error('Not a pull request event.')
+      } else {
+        return
+      }
     }
 
     const submitter = pullRequest.user.login
