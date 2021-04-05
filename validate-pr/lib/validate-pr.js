@@ -229,11 +229,15 @@ function run() {
         try {
             const verFile = core.getInput('version_file', { required: true });
             const verPattern = core.getInput('version_line_pattern', { required: true });
-            const token = core.getInput('github_token', { required: true });
+            const token = core.getInput('github_token');
             const requireApproval = core.getInput('require_approval');
             const requireTeam = core.getInput('require_team');
             const requireAccessLevel = core.getInput('require_access_level');
             const verDiffRequired = core.getInput('missing_version_ok') !== 'yes';
+            if (!token) {
+                core.info('GITHUB_TOKEN not set, assuming this is a PR from a fork');
+                return;
+            }
             const octokit = github.getOctokit(token);
             const { owner, repo } = github.context.repo;
             const pullRequest = github.context.payload.pull_request;

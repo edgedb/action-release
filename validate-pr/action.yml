@@ -4,7 +4,6 @@ author: 'EdgeDB Inc.'
 inputs:
   github_token:
     description: Github API token.
-    required: true
   version_file:
     description: Path to the file containing the version string.
     required: true
