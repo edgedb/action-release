@@ -34,7 +34,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
 const github = __importStar(require("@actions/github"));
 const parse_diff_1 = __importDefault(require("parse-diff"));
-const request = __importStar(require("request-promise-native"));
+const fetch = __importStar(require("node-fetch"));
 const pep440 = __importStar(require("@renovate/pep440"));
 function isMaintainer({ octokit, user, owner, repo, teamName = '', accessLevel = 'MAINTAIN' }) {
     var _a, _b;
@@ -132,7 +132,7 @@ function getVersionFromDiff(diffText, verFile, verPattern, verDiffRequired) {
         .replace('[[:SEMVER:]]', SEMVER));
     let newVersion = '';
     let oldVersion = '';
-    for (const file of parse_diff_1.default(diffText)) {
+    for (const file of (0, parse_diff_1.default)(diffText)) {
         if (file.to == verFile) {
             for (const chunk of file.chunks) {
                 for (const change of chunk.changes) {
@@ -181,12 +181,12 @@ function isApproved(octokit, pullRequest) {
     return __awaiter(this, void 0, void 0, function* () {
         const owner = pullRequest.base.repo.owner.login;
         const repo = pullRequest.base.repo.name;
-        const reviews = yield octokit.pulls.listReviews({
+        const reviews = yield octokit.rest.pulls.listReviews({
             owner,
             repo,
             pull_number: pullRequest.number
         });
-        const requestedReviewers = yield octokit.pulls.listRequestedReviewers({
+        const requestedReviewers = yield octokit.rest.pulls.listRequestedReviewers({
             owner,
             repo,
             pull_number: pullRequest.number
@@ -195,16 +195,20 @@ function isApproved(octokit, pullRequest) {
         const requireTeam = core.getInput('require_team');
         const requireAccessLevel = core.getInput('require_access_level');
         for (const review of reviews.data) {
+            if (review.user == null) {
+                continue;
+            }
             const reviewer = review.user.login;
             const state = review.state;
-            if (isMaintainer({
+            const reviewerIsMaintainer = yield isMaintainer({
                 octokit,
                 owner,
                 repo,
                 user: reviewer,
                 teamName: requireTeam,
                 accessLevel: requireAccessLevel
-            }) &&
+            });
+            if (reviewerIsMaintainer &&
                 state == 'APPROVED' &&
                 !requestedReviewerNames.has(reviewer)) {
                 return true;
@@ -215,7 +219,7 @@ function isApproved(octokit, pullRequest) {
 }
 function approve({ octokit, owner, repo, pullRequest }) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield octokit.pulls.createReview({
+        yield octokit.rest.pulls.createReview({
             owner,
             repo,
             pull_number: pullRequest.number,
@@ -250,35 +254,34 @@ function run() {
                 }
             }
             const submitter = pullRequest.user.login;
-            if (!(yield isMaintainer({
+            const submitterIsMaintainer = yield isMaintainer({
                 octokit,
                 user: submitter,
                 owner,
                 repo,
                 teamName: requireTeam,
                 accessLevel: requireAccessLevel
-            }))) {
-                core.setFailed(`User ${submitter} does not belong to any team that is ` +
-                    `authorized to make releases in the "${repo}" repository`);
+            });
+            const diffTextRequest = yield fetch.default(pullRequest.diff_url);
+            const diffText = yield diffTextRequest.text();
+            const version = getVersionFromDiff(diffText, verFile, verPattern, verDiffRequired);
+            core.setOutput('version', version);
+            if (version === '') {
+                return;
+            }
+            let approved = 'false';
+            if (yield isApproved(octokit, pullRequest)) {
+                approved = 'true';
+            }
+            else if (requireApproval === 'no' && submitterIsMaintainer) {
+                yield approve({ octokit, owner, repo, pullRequest });
+                // Recheck the approval status
+                approved = (yield isApproved(octokit, pullRequest)) ? 'true' : 'false';
             }
             else {
-                const diffText = yield request.get(pullRequest.diff_url);
-                const version = getVersionFromDiff(diffText, verFile, verPattern, verDiffRequired);
-                core.setOutput('version', version);
-                if (version === '') {
-                    return;
-                }
-                let approved = 'false';
-                if (yield isApproved(octokit, pullRequest)) {
-                    approved = 'true';
-                }
-                else if (requireApproval === 'no') {
-                    yield approve({ octokit, owner, repo, pullRequest });
-                    // Recheck the approval status
-                    approved = (yield isApproved(octokit, pullRequest)) ? 'true' : 'false';
-                }
-                core.setOutput('approved', approved);
+                core.setFailed(`Release pull requests require maintainer approval.`);
             }
+            core.setOutput('approved', approved);
         }
         catch (error) {
             core.setFailed(error.message);

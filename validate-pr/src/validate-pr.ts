@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import parseDiff from 'parse-diff'
-import * as request from 'request-promise-native'
+import * as fetch from 'node-fetch'
 import * as pep440 from '@renovate/pep440'
 import * as githubGraphql from './generated/graphql'
 
@@ -199,13 +199,13 @@ async function isApproved(
   const owner = pullRequest.base.repo.owner.login
   const repo = pullRequest.base.repo.name
 
-  const reviews = await octokit.pulls.listReviews({
+  const reviews = await octokit.rest.pulls.listReviews({
     owner,
     repo,
     pull_number: pullRequest.number
   })
 
-  const requestedReviewers = await octokit.pulls.listRequestedReviewers({
+  const requestedReviewers = await octokit.rest.pulls.listRequestedReviewers({
     owner,
     repo,
     pull_number: pullRequest.number
@@ -219,18 +219,22 @@ async function isApproved(
   const requireAccessLevel = core.getInput('require_access_level')
 
   for (const review of reviews.data) {
+    if (review.user == null) {
+      continue
+    }
     const reviewer = review.user.login
     const state = review.state
+    const reviewerIsMaintainer = await isMaintainer({
+      octokit,
+      owner,
+      repo,
+      user: reviewer,
+      teamName: requireTeam,
+      accessLevel: requireAccessLevel
+    })
 
     if (
-      isMaintainer({
-        octokit,
-        owner,
-        repo,
-        user: reviewer,
-        teamName: requireTeam,
-        accessLevel: requireAccessLevel
-      }) &&
+      reviewerIsMaintainer &&
       state == 'APPROVED' &&
       !requestedReviewerNames.has(reviewer)
     ) {
@@ -252,7 +256,7 @@ async function approve({
   repo: string
   pullRequest: {[key: string]: any}
 }): Promise<boolean> {
-  await octokit.pulls.createReview({
+  await octokit.rest.pulls.createReview({
     owner,
     repo,
     pull_number: pullRequest.number,
@@ -289,48 +293,43 @@ async function run() {
     }
 
     const submitter = pullRequest.user.login
+    const submitterIsMaintainer = await isMaintainer({
+      octokit,
+      user: submitter,
+      owner,
+      repo,
+      teamName: requireTeam,
+      accessLevel: requireAccessLevel
+    })
 
-    if (
-      !(await isMaintainer({
-        octokit,
-        user: submitter,
-        owner,
-        repo,
-        teamName: requireTeam,
-        accessLevel: requireAccessLevel
-      }))
-    ) {
-      core.setFailed(
-        `User ${submitter} does not belong to any team that is ` +
-          `authorized to make releases in the "${repo}" repository`
-      )
-    } else {
-      const diffText = await request.get(pullRequest.diff_url)
+    const diffTextRequest = await fetch.default(pullRequest.diff_url)
+    const diffText = await diffTextRequest.text()
 
-      const version = getVersionFromDiff(
-        diffText,
-        verFile,
-        verPattern,
-        verDiffRequired
-      )
-      core.setOutput('version', version)
-      if (version === '') {
-        return
-      }
-      let approved = 'false'
-
-      if (await isApproved(octokit, pullRequest)) {
-        approved = 'true'
-      } else if (requireApproval === 'no') {
-        await approve({octokit, owner, repo, pullRequest})
-        // Recheck the approval status
-        approved = (await isApproved(octokit, pullRequest)) ? 'true' : 'false'
-      }
-
-      core.setOutput('approved', approved)
+    const version = getVersionFromDiff(
+      diffText,
+      verFile,
+      verPattern,
+      verDiffRequired
+    )
+    core.setOutput('version', version)
+    if (version === '') {
+      return
     }
+    let approved = 'false'
+
+    if (await isApproved(octokit, pullRequest)) {
+      approved = 'true'
+    } else if (requireApproval === 'no' && submitterIsMaintainer) {
+      await approve({octokit, owner, repo, pullRequest})
+      // Recheck the approval status
+      approved = (await isApproved(octokit, pullRequest)) ? 'true' : 'false'
+    } else {
+      core.setFailed(`Release pull requests require maintainer approval.`)
+    }
+
+    core.setOutput('approved', approved)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed((error as Error).message)
   }
 }
 

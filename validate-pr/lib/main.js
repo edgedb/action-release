@@ -5,5 +5,5 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const validate_pr_1 = __importDefault(require("./validate-pr"));
 if (require.main === module) {
-    validate_pr_1.default();
+    (0, validate_pr_1.default)();
 }
