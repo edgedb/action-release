@@ -302,7 +302,7 @@ function run() {
                 // Recheck the approval status
                 approved = (yield isApproved(octokit, pullRequest)) ? 'true' : 'false';
             }
-            else {
+            else if (verDiffRequired) {
                 core.setFailed(`Release pull requests require maintainer approval.`);
             }
             core.setOutput('approved', approved);

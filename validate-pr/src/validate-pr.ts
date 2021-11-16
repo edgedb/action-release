@@ -323,7 +323,7 @@ async function run() {
       await approve({octokit, owner, repo, pullRequest})
       // Recheck the approval status
       approved = (await isApproved(octokit, pullRequest)) ? 'true' : 'false'
-    } else {
+    } else if (verDiffRequired) {
       core.setFailed(`Release pull requests require maintainer approval.`)
     }
 
