@@ -39,7 +39,7 @@ outputs:
   approved:
     description: Whether the PR is approved.
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'tag'
