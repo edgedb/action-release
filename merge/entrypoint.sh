@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -Eeo pipefail
+set -Eeox pipefail
 
 . /lib.sh
 
@@ -22,4 +22,4 @@ fi
 
 git fetch origin "${GITHUB_REF}"
 echo "${message}" | git tag --sign --file=- "${INPUT_TAG_NAME}" "${pr_sha}"
-git push --follow-tags origin "${pr_sha}":"${base_ref}"
+git push --force --follow-tags origin "${pr_sha}":"${base_ref}"
