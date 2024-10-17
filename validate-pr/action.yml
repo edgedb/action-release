@@ -39,8 +39,8 @@ outputs:
   approved:
     description: Whether the PR is approved.
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'node20'
+  main: 'dist/index.cjs'
 branding:
   icon: 'tag'
   color: 'gray-dark'

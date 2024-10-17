@@ -4,14 +4,13 @@
   "description": "Validate a release pull request",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "type-check": "tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build --source-map --license licenses.txt",
-    "precommit": "yarn run build && yarn run package && git add dist/",
-    "all": "yarn run build && yarn run format && yarn run lint && yarn run package",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "package": "esbuild src/main.ts --outfile=dist/index.cjs --bundle --platform=node --format=cjs --sourcemap --minify",
+    "all": "npm run type-check && npm run format && npm run lint && npm run package"
   },
   "repository": {
     "type": "git",
@@ -20,26 +19,26 @@
   "author": "EdgeDB Inc.",
   "license": "Apache-2.0",
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1",
-    "@octokit/graphql": "5.0.4",
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "@octokit/graphql": "8.1.1",
     "@renovate/pep440": "1.0.0",
-    "graphql": "^16.6.0",
-    "node-fetch": "^2.6.7",
-    "parse-diff": "^0.9.0"
+    "graphql": "^16.9.0",
+    "node-fetch": "^3.3.2",
+    "parse-diff": "^0.11.1"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "2.13.7",
-    "@graphql-codegen/typescript": "2.8.0",
-    "@graphql-codegen/typescript-resolvers": "2.7.5",
-    "@octokit/graphql-schema": "^12.20.0",
-    "@types/node": "^18.11.7",
-    "@types/node-fetch": "^2.6.0",
-    "@typescript-eslint/parser": "^5.9.1",
-    "@vercel/ncc": "^0.34.0",
-    "eslint": "^8.6.0",
-    "eslint-plugin-github": "^4.3.5",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.4"
+    "@graphql-codegen/cli": "5.0.3",
+    "@graphql-codegen/typescript": "4.1.0",
+    "@graphql-codegen/typescript-resolvers": "4.3.0",
+    "@octokit/graphql-schema": "^15.25.0",
+    "@types/node": "^22.7.6",
+    "@types/node-fetch": "^2.6.11",
+    "@typescript-eslint/parser": "^8.10.0",
+    "esbuild": "^0.19.4",
+    "eslint": "^8.57.1",
+    "eslint-plugin-github": "^5.0.2",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
   }
 }

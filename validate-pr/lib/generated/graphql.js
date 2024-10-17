@@ -8,7 +8,7 @@ var AuditLogOrderField;
 (function (AuditLogOrderField) {
     /** Order audit log entries by timestamp */
     AuditLogOrderField["CreatedAt"] = "CREATED_AT";
-})(AuditLogOrderField = exports.AuditLogOrderField || (exports.AuditLogOrderField = {}));
+})(AuditLogOrderField || (exports.AuditLogOrderField = AuditLogOrderField = {}));
 /** Represents an annotation's information level. */
 var CheckAnnotationLevel;
 (function (CheckAnnotationLevel) {
@@ -18,7 +18,7 @@ var CheckAnnotationLevel;
     CheckAnnotationLevel["Notice"] = "NOTICE";
     /** An annotation indicating an ignorable error. */
     CheckAnnotationLevel["Warning"] = "WARNING";
-})(CheckAnnotationLevel = exports.CheckAnnotationLevel || (exports.CheckAnnotationLevel = {}));
+})(CheckAnnotationLevel || (exports.CheckAnnotationLevel = CheckAnnotationLevel = {}));
 /** The possible states for a check suite or run conclusion. */
 var CheckConclusionState;
 (function (CheckConclusionState) {
@@ -40,7 +40,7 @@ var CheckConclusionState;
     CheckConclusionState["StartupFailure"] = "STARTUP_FAILURE";
     /** The check suite or run was marked stale by GitHub. Only GitHub can use this conclusion. */
     CheckConclusionState["Stale"] = "STALE";
-})(CheckConclusionState = exports.CheckConclusionState || (exports.CheckConclusionState = {}));
+})(CheckConclusionState || (exports.CheckConclusionState = CheckConclusionState = {}));
 /** The possible types of check runs. */
 var CheckRunType;
 (function (CheckRunType) {
@@ -48,7 +48,7 @@ var CheckRunType;
     CheckRunType["All"] = "ALL";
     /** The latest check run. */
     CheckRunType["Latest"] = "LATEST";
-})(CheckRunType = exports.CheckRunType || (exports.CheckRunType = {}));
+})(CheckRunType || (exports.CheckRunType = CheckRunType = {}));
 /** The possible states for a check suite or run status. */
 var CheckStatusState;
 (function (CheckStatusState) {
@@ -60,7 +60,7 @@ var CheckStatusState;
     CheckStatusState["Completed"] = "COMPLETED";
     /** The check suite or run has been requested. */
     CheckStatusState["Requested"] = "REQUESTED";
-})(CheckStatusState = exports.CheckStatusState || (exports.CheckStatusState = {}));
+})(CheckStatusState || (exports.CheckStatusState = CheckStatusState = {}));
 /** Collaborators affiliation level with a subject. */
 var CollaboratorAffiliation;
 (function (CollaboratorAffiliation) {
@@ -70,7 +70,7 @@ var CollaboratorAffiliation;
     CollaboratorAffiliation["Direct"] = "DIRECT";
     /** All collaborators the authenticated user can see. */
     CollaboratorAffiliation["All"] = "ALL";
-})(CollaboratorAffiliation = exports.CollaboratorAffiliation || (exports.CollaboratorAffiliation = {}));
+})(CollaboratorAffiliation || (exports.CollaboratorAffiliation = CollaboratorAffiliation = {}));
 /** A comment author association with repository. */
 var CommentAuthorAssociation;
 (function (CommentAuthorAssociation) {
@@ -90,7 +90,7 @@ var CommentAuthorAssociation;
     CommentAuthorAssociation["FirstTimer"] = "FIRST_TIMER";
     /** Author has no association with the repository. */
     CommentAuthorAssociation["None"] = "NONE";
-})(CommentAuthorAssociation = exports.CommentAuthorAssociation || (exports.CommentAuthorAssociation = {}));
+})(CommentAuthorAssociation || (exports.CommentAuthorAssociation = CommentAuthorAssociation = {}));
 /** The possible errors that will prevent a user from updating a comment. */
 var CommentCannotUpdateReason;
 (function (CommentCannotUpdateReason) {
@@ -108,7 +108,7 @@ var CommentCannotUpdateReason;
     CommentCannotUpdateReason["VerifiedEmailRequired"] = "VERIFIED_EMAIL_REQUIRED";
     /** You cannot update this comment */
     CommentCannotUpdateReason["Denied"] = "DENIED";
-})(CommentCannotUpdateReason = exports.CommentCannotUpdateReason || (exports.CommentCannotUpdateReason = {}));
+})(CommentCannotUpdateReason || (exports.CommentCannotUpdateReason = CommentCannotUpdateReason = {}));
 /** Properties by which commit contribution connections can be ordered. */
 var CommitContributionOrderField;
 (function (CommitContributionOrderField) {
@@ -116,7 +116,7 @@ var CommitContributionOrderField;
     CommitContributionOrderField["OccurredAt"] = "OCCURRED_AT";
     /** Order commit contributions by how many commits they represent. */
     CommitContributionOrderField["CommitCount"] = "COMMIT_COUNT";
-})(CommitContributionOrderField = exports.CommitContributionOrderField || (exports.CommitContributionOrderField = {}));
+})(CommitContributionOrderField || (exports.CommitContributionOrderField = CommitContributionOrderField = {}));
 /** The possible default permissions for repositories. */
 var DefaultRepositoryPermissionField;
 (function (DefaultRepositoryPermissionField) {
@@ -128,13 +128,13 @@ var DefaultRepositoryPermissionField;
     DefaultRepositoryPermissionField["Write"] = "WRITE";
     /** Can read, write, and administrate repos by default */
     DefaultRepositoryPermissionField["Admin"] = "ADMIN";
-})(DefaultRepositoryPermissionField = exports.DefaultRepositoryPermissionField || (exports.DefaultRepositoryPermissionField = {}));
+})(DefaultRepositoryPermissionField || (exports.DefaultRepositoryPermissionField = DefaultRepositoryPermissionField = {}));
 /** Properties by which deployment connections can be ordered. */
 var DeploymentOrderField;
 (function (DeploymentOrderField) {
     /** Order collection by creation time */
     DeploymentOrderField["CreatedAt"] = "CREATED_AT";
-})(DeploymentOrderField = exports.DeploymentOrderField || (exports.DeploymentOrderField = {}));
+})(DeploymentOrderField || (exports.DeploymentOrderField = DeploymentOrderField = {}));
 /** The possible states in which a deployment can be. */
 var DeploymentState;
 (function (DeploymentState) {
@@ -158,7 +158,7 @@ var DeploymentState;
     DeploymentState["InProgress"] = "IN_PROGRESS";
     /** The deployment is waiting. */
     DeploymentState["Waiting"] = "WAITING";
-})(DeploymentState = exports.DeploymentState || (exports.DeploymentState = {}));
+})(DeploymentState || (exports.DeploymentState = DeploymentState = {}));
 /** The possible states for a deployment status. */
 var DeploymentStatusState;
 (function (DeploymentStatusState) {
@@ -176,7 +176,7 @@ var DeploymentStatusState;
     DeploymentStatusState["Queued"] = "QUEUED";
     /** The deployment is in progress. */
     DeploymentStatusState["InProgress"] = "IN_PROGRESS";
-})(DeploymentStatusState = exports.DeploymentStatusState || (exports.DeploymentStatusState = {}));
+})(DeploymentStatusState || (exports.DeploymentStatusState = DeploymentStatusState = {}));
 /** The possible sides of a diff. */
 var DiffSide;
 (function (DiffSide) {
@@ -184,13 +184,13 @@ var DiffSide;
     DiffSide["Left"] = "LEFT";
     /** The right side of the diff. */
     DiffSide["Right"] = "RIGHT";
-})(DiffSide = exports.DiffSide || (exports.DiffSide = {}));
+})(DiffSide || (exports.DiffSide = DiffSide = {}));
 /** Properties by which enterprise administrator invitation connections can be ordered. */
 var EnterpriseAdministratorInvitationOrderField;
 (function (EnterpriseAdministratorInvitationOrderField) {
     /** Order enterprise administrator member invitations by creation time */
     EnterpriseAdministratorInvitationOrderField["CreatedAt"] = "CREATED_AT";
-})(EnterpriseAdministratorInvitationOrderField = exports.EnterpriseAdministratorInvitationOrderField || (exports.EnterpriseAdministratorInvitationOrderField = {}));
+})(EnterpriseAdministratorInvitationOrderField || (exports.EnterpriseAdministratorInvitationOrderField = EnterpriseAdministratorInvitationOrderField = {}));
 /** The possible administrator roles in an enterprise account. */
 var EnterpriseAdministratorRole;
 (function (EnterpriseAdministratorRole) {
@@ -198,7 +198,7 @@ var EnterpriseAdministratorRole;
     EnterpriseAdministratorRole["Owner"] = "OWNER";
     /** Represents a billing manager of the enterprise account. */
     EnterpriseAdministratorRole["BillingManager"] = "BILLING_MANAGER";
-})(EnterpriseAdministratorRole = exports.EnterpriseAdministratorRole || (exports.EnterpriseAdministratorRole = {}));
+})(EnterpriseAdministratorRole || (exports.EnterpriseAdministratorRole = EnterpriseAdministratorRole = {}));
 /** The possible values for the enterprise default repository permission setting. */
 var EnterpriseDefaultRepositoryPermissionSettingValue;
 (function (EnterpriseDefaultRepositoryPermissionSettingValue) {
@@ -212,7 +212,7 @@ var EnterpriseDefaultRepositoryPermissionSettingValue;
     EnterpriseDefaultRepositoryPermissionSettingValue["Read"] = "READ";
     /** Organization members will only be able to clone and pull public repositories. */
     EnterpriseDefaultRepositoryPermissionSettingValue["None"] = "NONE";
-})(EnterpriseDefaultRepositoryPermissionSettingValue = exports.EnterpriseDefaultRepositoryPermissionSettingValue || (exports.EnterpriseDefaultRepositoryPermissionSettingValue = {}));
+})(EnterpriseDefaultRepositoryPermissionSettingValue || (exports.EnterpriseDefaultRepositoryPermissionSettingValue = EnterpriseDefaultRepositoryPermissionSettingValue = {}));
 /** The possible values for an enabled/disabled enterprise setting. */
 var EnterpriseEnabledDisabledSettingValue;
 (function (EnterpriseEnabledDisabledSettingValue) {
@@ -222,7 +222,7 @@ var EnterpriseEnabledDisabledSettingValue;
     EnterpriseEnabledDisabledSettingValue["Disabled"] = "DISABLED";
     /** There is no policy set for organizations in the enterprise. */
     EnterpriseEnabledDisabledSettingValue["NoPolicy"] = "NO_POLICY";
-})(EnterpriseEnabledDisabledSettingValue = exports.EnterpriseEnabledDisabledSettingValue || (exports.EnterpriseEnabledDisabledSettingValue = {}));
+})(EnterpriseEnabledDisabledSettingValue || (exports.EnterpriseEnabledDisabledSettingValue = EnterpriseEnabledDisabledSettingValue = {}));
 /** The possible values for an enabled/no policy enterprise setting. */
 var EnterpriseEnabledSettingValue;
 (function (EnterpriseEnabledSettingValue) {
@@ -230,7 +230,7 @@ var EnterpriseEnabledSettingValue;
     EnterpriseEnabledSettingValue["Enabled"] = "ENABLED";
     /** There is no policy set for organizations in the enterprise. */
     EnterpriseEnabledSettingValue["NoPolicy"] = "NO_POLICY";
-})(EnterpriseEnabledSettingValue = exports.EnterpriseEnabledSettingValue || (exports.EnterpriseEnabledSettingValue = {}));
+})(EnterpriseEnabledSettingValue || (exports.EnterpriseEnabledSettingValue = EnterpriseEnabledSettingValue = {}));
 /** Properties by which enterprise member connections can be ordered. */
 var EnterpriseMemberOrderField;
 (function (EnterpriseMemberOrderField) {
@@ -238,7 +238,7 @@ var EnterpriseMemberOrderField;
     EnterpriseMemberOrderField["Login"] = "LOGIN";
     /** Order enterprise members by creation time */
     EnterpriseMemberOrderField["CreatedAt"] = "CREATED_AT";
-})(EnterpriseMemberOrderField = exports.EnterpriseMemberOrderField || (exports.EnterpriseMemberOrderField = {}));
+})(EnterpriseMemberOrderField || (exports.EnterpriseMemberOrderField = EnterpriseMemberOrderField = {}));
 /** The possible values for the enterprise members can create repositories setting. */
 var EnterpriseMembersCanCreateRepositoriesSettingValue;
 (function (EnterpriseMembersCanCreateRepositoriesSettingValue) {
@@ -252,7 +252,7 @@ var EnterpriseMembersCanCreateRepositoriesSettingValue;
     EnterpriseMembersCanCreateRepositoriesSettingValue["Private"] = "PRIVATE";
     /** Members will not be able to create public or private repositories. */
     EnterpriseMembersCanCreateRepositoriesSettingValue["Disabled"] = "DISABLED";
-})(EnterpriseMembersCanCreateRepositoriesSettingValue = exports.EnterpriseMembersCanCreateRepositoriesSettingValue || (exports.EnterpriseMembersCanCreateRepositoriesSettingValue = {}));
+})(EnterpriseMembersCanCreateRepositoriesSettingValue || (exports.EnterpriseMembersCanCreateRepositoriesSettingValue = EnterpriseMembersCanCreateRepositoriesSettingValue = {}));
 /** The possible values for the members can make purchases setting. */
 var EnterpriseMembersCanMakePurchasesSettingValue;
 (function (EnterpriseMembersCanMakePurchasesSettingValue) {
@@ -260,7 +260,7 @@ var EnterpriseMembersCanMakePurchasesSettingValue;
     EnterpriseMembersCanMakePurchasesSettingValue["Enabled"] = "ENABLED";
     /** The setting is disabled for organizations in the enterprise. */
     EnterpriseMembersCanMakePurchasesSettingValue["Disabled"] = "DISABLED";
-})(EnterpriseMembersCanMakePurchasesSettingValue = exports.EnterpriseMembersCanMakePurchasesSettingValue || (exports.EnterpriseMembersCanMakePurchasesSettingValue = {}));
+})(EnterpriseMembersCanMakePurchasesSettingValue || (exports.EnterpriseMembersCanMakePurchasesSettingValue = EnterpriseMembersCanMakePurchasesSettingValue = {}));
 /** Properties by which Enterprise Server installation connections can be ordered. */
 var EnterpriseServerInstallationOrderField;
 (function (EnterpriseServerInstallationOrderField) {
@@ -270,13 +270,13 @@ var EnterpriseServerInstallationOrderField;
     EnterpriseServerInstallationOrderField["CustomerName"] = "CUSTOMER_NAME";
     /** Order Enterprise Server installations by creation time */
     EnterpriseServerInstallationOrderField["CreatedAt"] = "CREATED_AT";
-})(EnterpriseServerInstallationOrderField = exports.EnterpriseServerInstallationOrderField || (exports.EnterpriseServerInstallationOrderField = {}));
+})(EnterpriseServerInstallationOrderField || (exports.EnterpriseServerInstallationOrderField = EnterpriseServerInstallationOrderField = {}));
 /** Properties by which Enterprise Server user account email connections can be ordered. */
 var EnterpriseServerUserAccountEmailOrderField;
 (function (EnterpriseServerUserAccountEmailOrderField) {
     /** Order emails by email */
     EnterpriseServerUserAccountEmailOrderField["Email"] = "EMAIL";
-})(EnterpriseServerUserAccountEmailOrderField = exports.EnterpriseServerUserAccountEmailOrderField || (exports.EnterpriseServerUserAccountEmailOrderField = {}));
+})(EnterpriseServerUserAccountEmailOrderField || (exports.EnterpriseServerUserAccountEmailOrderField = EnterpriseServerUserAccountEmailOrderField = {}));
 /** Properties by which Enterprise Server user account connections can be ordered. */
 var EnterpriseServerUserAccountOrderField;
 (function (EnterpriseServerUserAccountOrderField) {
@@ -284,13 +284,13 @@ var EnterpriseServerUserAccountOrderField;
     EnterpriseServerUserAccountOrderField["Login"] = "LOGIN";
     /** Order user accounts by creation time on the Enterprise Server installation */
     EnterpriseServerUserAccountOrderField["RemoteCreatedAt"] = "REMOTE_CREATED_AT";
-})(EnterpriseServerUserAccountOrderField = exports.EnterpriseServerUserAccountOrderField || (exports.EnterpriseServerUserAccountOrderField = {}));
+})(EnterpriseServerUserAccountOrderField || (exports.EnterpriseServerUserAccountOrderField = EnterpriseServerUserAccountOrderField = {}));
 /** Properties by which Enterprise Server user accounts upload connections can be ordered. */
 var EnterpriseServerUserAccountsUploadOrderField;
 (function (EnterpriseServerUserAccountsUploadOrderField) {
     /** Order user accounts uploads by creation time */
     EnterpriseServerUserAccountsUploadOrderField["CreatedAt"] = "CREATED_AT";
-})(EnterpriseServerUserAccountsUploadOrderField = exports.EnterpriseServerUserAccountsUploadOrderField || (exports.EnterpriseServerUserAccountsUploadOrderField = {}));
+})(EnterpriseServerUserAccountsUploadOrderField || (exports.EnterpriseServerUserAccountsUploadOrderField = EnterpriseServerUserAccountsUploadOrderField = {}));
 /** Synchronization state of the Enterprise Server user accounts upload */
 var EnterpriseServerUserAccountsUploadSyncState;
 (function (EnterpriseServerUserAccountsUploadSyncState) {
@@ -300,7 +300,7 @@ var EnterpriseServerUserAccountsUploadSyncState;
     EnterpriseServerUserAccountsUploadSyncState["Success"] = "SUCCESS";
     /** The synchronization of the upload failed. */
     EnterpriseServerUserAccountsUploadSyncState["Failure"] = "FAILURE";
-})(EnterpriseServerUserAccountsUploadSyncState = exports.EnterpriseServerUserAccountsUploadSyncState || (exports.EnterpriseServerUserAccountsUploadSyncState = {}));
+})(EnterpriseServerUserAccountsUploadSyncState || (exports.EnterpriseServerUserAccountsUploadSyncState = EnterpriseServerUserAccountsUploadSyncState = {}));
 /** The possible roles for enterprise membership. */
 var EnterpriseUserAccountMembershipRole;
 (function (EnterpriseUserAccountMembershipRole) {
@@ -308,7 +308,7 @@ var EnterpriseUserAccountMembershipRole;
     EnterpriseUserAccountMembershipRole["Member"] = "MEMBER";
     /** The user is an owner of the enterprise membership. */
     EnterpriseUserAccountMembershipRole["Owner"] = "OWNER";
-})(EnterpriseUserAccountMembershipRole = exports.EnterpriseUserAccountMembershipRole || (exports.EnterpriseUserAccountMembershipRole = {}));
+})(EnterpriseUserAccountMembershipRole || (exports.EnterpriseUserAccountMembershipRole = EnterpriseUserAccountMembershipRole = {}));
 /** The possible GitHub Enterprise deployments where this user can exist. */
 var EnterpriseUserDeployment;
 (function (EnterpriseUserDeployment) {
@@ -316,7 +316,7 @@ var EnterpriseUserDeployment;
     EnterpriseUserDeployment["Cloud"] = "CLOUD";
     /** The user is part of a GitHub Enterprise Server deployment. */
     EnterpriseUserDeployment["Server"] = "SERVER";
-})(EnterpriseUserDeployment = exports.EnterpriseUserDeployment || (exports.EnterpriseUserDeployment = {}));
+})(EnterpriseUserDeployment || (exports.EnterpriseUserDeployment = EnterpriseUserDeployment = {}));
 /** The possible viewed states of a file . */
 var FileViewedState;
 (function (FileViewedState) {
@@ -326,7 +326,7 @@ var FileViewedState;
     FileViewedState["Viewed"] = "VIEWED";
     /** The file has not been marked as viewed. */
     FileViewedState["Unviewed"] = "UNVIEWED";
-})(FileViewedState = exports.FileViewedState || (exports.FileViewedState = {}));
+})(FileViewedState || (exports.FileViewedState = FileViewedState = {}));
 /** The possible funding platforms for repository funding links. */
 var FundingPlatform;
 (function (FundingPlatform) {
@@ -350,7 +350,7 @@ var FundingPlatform;
     FundingPlatform["Otechie"] = "OTECHIE";
     /** Custom funding platform. */
     FundingPlatform["Custom"] = "CUSTOM";
-})(FundingPlatform = exports.FundingPlatform || (exports.FundingPlatform = {}));
+})(FundingPlatform || (exports.FundingPlatform = FundingPlatform = {}));
 /** Properties by which gist connections can be ordered. */
 var GistOrderField;
 (function (GistOrderField) {
@@ -360,7 +360,7 @@ var GistOrderField;
     GistOrderField["UpdatedAt"] = "UPDATED_AT";
     /** Order gists by push time */
     GistOrderField["PushedAt"] = "PUSHED_AT";
-})(GistOrderField = exports.GistOrderField || (exports.GistOrderField = {}));
+})(GistOrderField || (exports.GistOrderField = GistOrderField = {}));
 /** The privacy of a Gist */
 var GistPrivacy;
 (function (GistPrivacy) {
@@ -370,7 +370,7 @@ var GistPrivacy;
     GistPrivacy["Secret"] = "SECRET";
     /** Gists that are public and secret */
     GistPrivacy["All"] = "ALL";
-})(GistPrivacy = exports.GistPrivacy || (exports.GistPrivacy = {}));
+})(GistPrivacy || (exports.GistPrivacy = GistPrivacy = {}));
 /** The state of a Git signature. */
 var GitSignatureState;
 (function (GitSignatureState) {
@@ -408,7 +408,7 @@ var GitSignatureState;
     GitSignatureState["BadCert"] = "BAD_CERT";
     /** One or more certificates in chain has been revoked */
     GitSignatureState["OcspRevoked"] = "OCSP_REVOKED";
-})(GitSignatureState = exports.GitSignatureState || (exports.GitSignatureState = {}));
+})(GitSignatureState || (exports.GitSignatureState = GitSignatureState = {}));
 /** The possible states in which authentication can be configured with an identity provider. */
 var IdentityProviderConfigurationState;
 (function (IdentityProviderConfigurationState) {
@@ -418,7 +418,7 @@ var IdentityProviderConfigurationState;
     IdentityProviderConfigurationState["Configured"] = "CONFIGURED";
     /** Authentication with an identity provider is not configured. */
     IdentityProviderConfigurationState["Unconfigured"] = "UNCONFIGURED";
-})(IdentityProviderConfigurationState = exports.IdentityProviderConfigurationState || (exports.IdentityProviderConfigurationState = {}));
+})(IdentityProviderConfigurationState || (exports.IdentityProviderConfigurationState = IdentityProviderConfigurationState = {}));
 /** The possible values for the IP allow list enabled setting. */
 var IpAllowListEnabledSettingValue;
 (function (IpAllowListEnabledSettingValue) {
@@ -426,7 +426,7 @@ var IpAllowListEnabledSettingValue;
     IpAllowListEnabledSettingValue["Enabled"] = "ENABLED";
     /** The setting is disabled for the owner. */
     IpAllowListEnabledSettingValue["Disabled"] = "DISABLED";
-})(IpAllowListEnabledSettingValue = exports.IpAllowListEnabledSettingValue || (exports.IpAllowListEnabledSettingValue = {}));
+})(IpAllowListEnabledSettingValue || (exports.IpAllowListEnabledSettingValue = IpAllowListEnabledSettingValue = {}));
 /** Properties by which IP allow list entry connections can be ordered. */
 var IpAllowListEntryOrderField;
 (function (IpAllowListEntryOrderField) {
@@ -434,13 +434,13 @@ var IpAllowListEntryOrderField;
     IpAllowListEntryOrderField["CreatedAt"] = "CREATED_AT";
     /** Order IP allow list entries by the allow list value. */
     IpAllowListEntryOrderField["AllowListValue"] = "ALLOW_LIST_VALUE";
-})(IpAllowListEntryOrderField = exports.IpAllowListEntryOrderField || (exports.IpAllowListEntryOrderField = {}));
+})(IpAllowListEntryOrderField || (exports.IpAllowListEntryOrderField = IpAllowListEntryOrderField = {}));
 /** Properties by which issue comment connections can be ordered. */
 var IssueCommentOrderField;
 (function (IssueCommentOrderField) {
     /** Order issue comments by update time */
     IssueCommentOrderField["UpdatedAt"] = "UPDATED_AT";
-})(IssueCommentOrderField = exports.IssueCommentOrderField || (exports.IssueCommentOrderField = {}));
+})(IssueCommentOrderField || (exports.IssueCommentOrderField = IssueCommentOrderField = {}));
 /** Properties by which issue connections can be ordered. */
 var IssueOrderField;
 (function (IssueOrderField) {
@@ -450,7 +450,7 @@ var IssueOrderField;
     IssueOrderField["UpdatedAt"] = "UPDATED_AT";
     /** Order issues by comment count */
     IssueOrderField["Comments"] = "COMMENTS";
-})(IssueOrderField = exports.IssueOrderField || (exports.IssueOrderField = {}));
+})(IssueOrderField || (exports.IssueOrderField = IssueOrderField = {}));
 /** The possible states of an issue. */
 var IssueState;
 (function (IssueState) {
@@ -458,7 +458,7 @@ var IssueState;
     IssueState["Open"] = "OPEN";
     /** An issue that has been closed */
     IssueState["Closed"] = "CLOSED";
-})(IssueState = exports.IssueState || (exports.IssueState = {}));
+})(IssueState || (exports.IssueState = IssueState = {}));
 /** The possible item types found in a timeline. */
 var IssueTimelineItemsItemType;
 (function (IssueTimelineItemsItemType) {
@@ -522,7 +522,7 @@ var IssueTimelineItemsItemType;
     IssueTimelineItemsItemType["UnpinnedEvent"] = "UNPINNED_EVENT";
     /** Represents an 'unsubscribed' event on a given `Subscribable`. */
     IssueTimelineItemsItemType["UnsubscribedEvent"] = "UNSUBSCRIBED_EVENT";
-})(IssueTimelineItemsItemType = exports.IssueTimelineItemsItemType || (exports.IssueTimelineItemsItemType = {}));
+})(IssueTimelineItemsItemType || (exports.IssueTimelineItemsItemType = IssueTimelineItemsItemType = {}));
 /** Properties by which label connections can be ordered. */
 var LabelOrderField;
 (function (LabelOrderField) {
@@ -530,13 +530,13 @@ var LabelOrderField;
     LabelOrderField["Name"] = "NAME";
     /** Order labels by creation time */
     LabelOrderField["CreatedAt"] = "CREATED_AT";
-})(LabelOrderField = exports.LabelOrderField || (exports.LabelOrderField = {}));
+})(LabelOrderField || (exports.LabelOrderField = LabelOrderField = {}));
 /** Properties by which language connections can be ordered. */
 var LanguageOrderField;
 (function (LanguageOrderField) {
     /** Order languages by the size of all files containing the language */
     LanguageOrderField["Size"] = "SIZE";
-})(LanguageOrderField = exports.LanguageOrderField || (exports.LanguageOrderField = {}));
+})(LanguageOrderField || (exports.LanguageOrderField = LanguageOrderField = {}));
 /** The possible reasons that an issue or pull request was locked. */
 var LockReason;
 (function (LockReason) {
@@ -548,7 +548,7 @@ var LockReason;
     LockReason["Resolved"] = "RESOLVED";
     /** The issue or pull request was locked because the conversation was spam. */
     LockReason["Spam"] = "SPAM";
-})(LockReason = exports.LockReason || (exports.LockReason = {}));
+})(LockReason || (exports.LockReason = LockReason = {}));
 /** Whether or not a PullRequest can be merged. */
 var MergeableState;
 (function (MergeableState) {
@@ -558,7 +558,7 @@ var MergeableState;
     MergeableState["Conflicting"] = "CONFLICTING";
     /** The mergeability of the pull request is still being calculated. */
     MergeableState["Unknown"] = "UNKNOWN";
-})(MergeableState = exports.MergeableState || (exports.MergeableState = {}));
+})(MergeableState || (exports.MergeableState = MergeableState = {}));
 /** Properties by which milestone connections can be ordered. */
 var MilestoneOrderField;
 (function (MilestoneOrderField) {
@@ -570,7 +570,7 @@ var MilestoneOrderField;
     MilestoneOrderField["UpdatedAt"] = "UPDATED_AT";
     /** Order milestones by their number. */
     MilestoneOrderField["Number"] = "NUMBER";
-})(MilestoneOrderField = exports.MilestoneOrderField || (exports.MilestoneOrderField = {}));
+})(MilestoneOrderField || (exports.MilestoneOrderField = MilestoneOrderField = {}));
 /** The possible states of a milestone. */
 var MilestoneState;
 (function (MilestoneState) {
@@ -578,7 +578,7 @@ var MilestoneState;
     MilestoneState["Open"] = "OPEN";
     /** A milestone that has been closed. */
     MilestoneState["Closed"] = "CLOSED";
-})(MilestoneState = exports.MilestoneState || (exports.MilestoneState = {}));
+})(MilestoneState || (exports.MilestoneState = MilestoneState = {}));
 /** The state of an OAuth Application when it was created. */
 var OauthApplicationCreateAuditEntryState;
 (function (OauthApplicationCreateAuditEntryState) {
@@ -588,7 +588,7 @@ var OauthApplicationCreateAuditEntryState;
     OauthApplicationCreateAuditEntryState["Suspended"] = "SUSPENDED";
     /** The OAuth Application was in the process of being deleted. */
     OauthApplicationCreateAuditEntryState["PendingDeletion"] = "PENDING_DELETION";
-})(OauthApplicationCreateAuditEntryState = exports.OauthApplicationCreateAuditEntryState || (exports.OauthApplicationCreateAuditEntryState = {}));
+})(OauthApplicationCreateAuditEntryState || (exports.OauthApplicationCreateAuditEntryState = OauthApplicationCreateAuditEntryState = {}));
 /** The corresponding operation type for the action */
 var OperationType;
 (function (OperationType) {
@@ -606,7 +606,7 @@ var OperationType;
     OperationType["Restore"] = "RESTORE";
     /** An existing resource was transferred between multiple resources */
     OperationType["Transfer"] = "TRANSFER";
-})(OperationType = exports.OperationType || (exports.OperationType = {}));
+})(OperationType || (exports.OperationType = OperationType = {}));
 /** Possible directions in which to order a list of items when provided an `orderBy` argument. */
 var OrderDirection;
 (function (OrderDirection) {
@@ -614,7 +614,7 @@ var OrderDirection;
     OrderDirection["Asc"] = "ASC";
     /** Specifies a descending order for a given `orderBy` argument. */
     OrderDirection["Desc"] = "DESC";
-})(OrderDirection = exports.OrderDirection || (exports.OrderDirection = {}));
+})(OrderDirection || (exports.OrderDirection = OrderDirection = {}));
 /** The permissions available to members on an Organization. */
 var OrgAddMemberAuditEntryPermission;
 (function (OrgAddMemberAuditEntryPermission) {
@@ -622,7 +622,7 @@ var OrgAddMemberAuditEntryPermission;
     OrgAddMemberAuditEntryPermission["Read"] = "READ";
     /** Can read, clone, push, and add collaborators to repositories. */
     OrgAddMemberAuditEntryPermission["Admin"] = "ADMIN";
-})(OrgAddMemberAuditEntryPermission = exports.OrgAddMemberAuditEntryPermission || (exports.OrgAddMemberAuditEntryPermission = {}));
+})(OrgAddMemberAuditEntryPermission || (exports.OrgAddMemberAuditEntryPermission = OrgAddMemberAuditEntryPermission = {}));
 /** The billing plans available for organizations. */
 var OrgCreateAuditEntryBillingPlan;
 (function (OrgCreateAuditEntryBillingPlan) {
@@ -636,7 +636,7 @@ var OrgCreateAuditEntryBillingPlan;
     OrgCreateAuditEntryBillingPlan["Unlimited"] = "UNLIMITED";
     /** Tiered Per Seat Plan */
     OrgCreateAuditEntryBillingPlan["TieredPerSeat"] = "TIERED_PER_SEAT";
-})(OrgCreateAuditEntryBillingPlan = exports.OrgCreateAuditEntryBillingPlan || (exports.OrgCreateAuditEntryBillingPlan = {}));
+})(OrgCreateAuditEntryBillingPlan || (exports.OrgCreateAuditEntryBillingPlan = OrgCreateAuditEntryBillingPlan = {}));
 /** The reason a billing manager was removed from an Organization. */
 var OrgRemoveBillingManagerAuditEntryReason;
 (function (OrgRemoveBillingManagerAuditEntryReason) {
@@ -646,7 +646,7 @@ var OrgRemoveBillingManagerAuditEntryReason;
     OrgRemoveBillingManagerAuditEntryReason["SamlExternalIdentityMissing"] = "SAML_EXTERNAL_IDENTITY_MISSING";
     /** SAML SSO enforcement requires an external identity */
     OrgRemoveBillingManagerAuditEntryReason["SamlSsoEnforcementRequiresExternalIdentity"] = "SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY";
-})(OrgRemoveBillingManagerAuditEntryReason = exports.OrgRemoveBillingManagerAuditEntryReason || (exports.OrgRemoveBillingManagerAuditEntryReason = {}));
+})(OrgRemoveBillingManagerAuditEntryReason || (exports.OrgRemoveBillingManagerAuditEntryReason = OrgRemoveBillingManagerAuditEntryReason = {}));
 /** The type of membership a user has with an Organization. */
 var OrgRemoveMemberAuditEntryMembershipType;
 (function (OrgRemoveMemberAuditEntryMembershipType) {
@@ -660,7 +660,7 @@ var OrgRemoveMemberAuditEntryMembershipType;
     OrgRemoveMemberAuditEntryMembershipType["Unaffiliated"] = "UNAFFILIATED";
     /** An outside collaborator is a person who isn't explicitly a member of the Organization, but who has Read, Write, or Admin permissions to one or more repositories in the organization. */
     OrgRemoveMemberAuditEntryMembershipType["OutsideCollaborator"] = "OUTSIDE_COLLABORATOR";
-})(OrgRemoveMemberAuditEntryMembershipType = exports.OrgRemoveMemberAuditEntryMembershipType || (exports.OrgRemoveMemberAuditEntryMembershipType = {}));
+})(OrgRemoveMemberAuditEntryMembershipType || (exports.OrgRemoveMemberAuditEntryMembershipType = OrgRemoveMemberAuditEntryMembershipType = {}));
 /** The reason a member was removed from an Organization. */
 var OrgRemoveMemberAuditEntryReason;
 (function (OrgRemoveMemberAuditEntryReason) {
@@ -674,7 +674,7 @@ var OrgRemoveMemberAuditEntryReason;
     OrgRemoveMemberAuditEntryReason["UserAccountDeleted"] = "USER_ACCOUNT_DELETED";
     /** User was removed from organization during account recovery */
     OrgRemoveMemberAuditEntryReason["TwoFactorAccountRecovery"] = "TWO_FACTOR_ACCOUNT_RECOVERY";
-})(OrgRemoveMemberAuditEntryReason = exports.OrgRemoveMemberAuditEntryReason || (exports.OrgRemoveMemberAuditEntryReason = {}));
+})(OrgRemoveMemberAuditEntryReason || (exports.OrgRemoveMemberAuditEntryReason = OrgRemoveMemberAuditEntryReason = {}));
 /** The type of membership a user has with an Organization. */
 var OrgRemoveOutsideCollaboratorAuditEntryMembershipType;
 (function (OrgRemoveOutsideCollaboratorAuditEntryMembershipType) {
@@ -684,7 +684,7 @@ var OrgRemoveOutsideCollaboratorAuditEntryMembershipType;
     OrgRemoveOutsideCollaboratorAuditEntryMembershipType["Unaffiliated"] = "UNAFFILIATED";
     /** A billing manager is a user who manages the billing settings for the Organization, such as updating payment information. */
     OrgRemoveOutsideCollaboratorAuditEntryMembershipType["BillingManager"] = "BILLING_MANAGER";
-})(OrgRemoveOutsideCollaboratorAuditEntryMembershipType = exports.OrgRemoveOutsideCollaboratorAuditEntryMembershipType || (exports.OrgRemoveOutsideCollaboratorAuditEntryMembershipType = {}));
+})(OrgRemoveOutsideCollaboratorAuditEntryMembershipType || (exports.OrgRemoveOutsideCollaboratorAuditEntryMembershipType = OrgRemoveOutsideCollaboratorAuditEntryMembershipType = {}));
 /** The reason an outside collaborator was removed from an Organization. */
 var OrgRemoveOutsideCollaboratorAuditEntryReason;
 (function (OrgRemoveOutsideCollaboratorAuditEntryReason) {
@@ -692,7 +692,7 @@ var OrgRemoveOutsideCollaboratorAuditEntryReason;
     OrgRemoveOutsideCollaboratorAuditEntryReason["TwoFactorRequirementNonCompliance"] = "TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE";
     /** SAML external identity missing */
     OrgRemoveOutsideCollaboratorAuditEntryReason["SamlExternalIdentityMissing"] = "SAML_EXTERNAL_IDENTITY_MISSING";
-})(OrgRemoveOutsideCollaboratorAuditEntryReason = exports.OrgRemoveOutsideCollaboratorAuditEntryReason || (exports.OrgRemoveOutsideCollaboratorAuditEntryReason = {}));
+})(OrgRemoveOutsideCollaboratorAuditEntryReason || (exports.OrgRemoveOutsideCollaboratorAuditEntryReason = OrgRemoveOutsideCollaboratorAuditEntryReason = {}));
 /** The default permission a repository can have in an Organization. */
 var OrgUpdateDefaultRepositoryPermissionAuditEntryPermission;
 (function (OrgUpdateDefaultRepositoryPermissionAuditEntryPermission) {
@@ -704,7 +704,7 @@ var OrgUpdateDefaultRepositoryPermissionAuditEntryPermission;
     OrgUpdateDefaultRepositoryPermissionAuditEntryPermission["Admin"] = "ADMIN";
     /** No default permission value. */
     OrgUpdateDefaultRepositoryPermissionAuditEntryPermission["None"] = "NONE";
-})(OrgUpdateDefaultRepositoryPermissionAuditEntryPermission = exports.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission || (exports.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission = {}));
+})(OrgUpdateDefaultRepositoryPermissionAuditEntryPermission || (exports.OrgUpdateDefaultRepositoryPermissionAuditEntryPermission = OrgUpdateDefaultRepositoryPermissionAuditEntryPermission = {}));
 /** The permissions available to members on an Organization. */
 var OrgUpdateMemberAuditEntryPermission;
 (function (OrgUpdateMemberAuditEntryPermission) {
@@ -712,7 +712,7 @@ var OrgUpdateMemberAuditEntryPermission;
     OrgUpdateMemberAuditEntryPermission["Read"] = "READ";
     /** Can read, clone, push, and add collaborators to repositories. */
     OrgUpdateMemberAuditEntryPermission["Admin"] = "ADMIN";
-})(OrgUpdateMemberAuditEntryPermission = exports.OrgUpdateMemberAuditEntryPermission || (exports.OrgUpdateMemberAuditEntryPermission = {}));
+})(OrgUpdateMemberAuditEntryPermission || (exports.OrgUpdateMemberAuditEntryPermission = OrgUpdateMemberAuditEntryPermission = {}));
 /** The permissions available for repository creation on an Organization. */
 var OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility;
 (function (OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility) {
@@ -732,7 +732,7 @@ var OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility;
     OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility["PrivateInternal"] = "PRIVATE_INTERNAL";
     /** All organization members are restricted from creating public or private repositories. */
     OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility["PublicPrivate"] = "PUBLIC_PRIVATE";
-})(OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility = exports.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility || (exports.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility = {}));
+})(OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility || (exports.OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility = OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility = {}));
 /** The possible organization invitation roles. */
 var OrganizationInvitationRole;
 (function (OrganizationInvitationRole) {
@@ -744,7 +744,7 @@ var OrganizationInvitationRole;
     OrganizationInvitationRole["BillingManager"] = "BILLING_MANAGER";
     /** The user's previous role will be reinstated. */
     OrganizationInvitationRole["Reinstate"] = "REINSTATE";
-})(OrganizationInvitationRole = exports.OrganizationInvitationRole || (exports.OrganizationInvitationRole = {}));
+})(OrganizationInvitationRole || (exports.OrganizationInvitationRole = OrganizationInvitationRole = {}));
 /** The possible organization invitation types. */
 var OrganizationInvitationType;
 (function (OrganizationInvitationType) {
@@ -752,7 +752,7 @@ var OrganizationInvitationType;
     OrganizationInvitationType["User"] = "USER";
     /** The invitation was to an email address. */
     OrganizationInvitationType["Email"] = "EMAIL";
-})(OrganizationInvitationType = exports.OrganizationInvitationType || (exports.OrganizationInvitationType = {}));
+})(OrganizationInvitationType || (exports.OrganizationInvitationType = OrganizationInvitationType = {}));
 /** The possible roles within an organization for its members. */
 var OrganizationMemberRole;
 (function (OrganizationMemberRole) {
@@ -760,7 +760,7 @@ var OrganizationMemberRole;
     OrganizationMemberRole["Member"] = "MEMBER";
     /** The user is an administrator of the organization. */
     OrganizationMemberRole["Admin"] = "ADMIN";
-})(OrganizationMemberRole = exports.OrganizationMemberRole || (exports.OrganizationMemberRole = {}));
+})(OrganizationMemberRole || (exports.OrganizationMemberRole = OrganizationMemberRole = {}));
 /** The possible values for the members can create repositories setting on an organization. */
 var OrganizationMembersCanCreateRepositoriesSettingValue;
 (function (OrganizationMembersCanCreateRepositoriesSettingValue) {
@@ -770,7 +770,7 @@ var OrganizationMembersCanCreateRepositoriesSettingValue;
     OrganizationMembersCanCreateRepositoriesSettingValue["Private"] = "PRIVATE";
     /** Members will not be able to create public or private repositories. */
     OrganizationMembersCanCreateRepositoriesSettingValue["Disabled"] = "DISABLED";
-})(OrganizationMembersCanCreateRepositoriesSettingValue = exports.OrganizationMembersCanCreateRepositoriesSettingValue || (exports.OrganizationMembersCanCreateRepositoriesSettingValue = {}));
+})(OrganizationMembersCanCreateRepositoriesSettingValue || (exports.OrganizationMembersCanCreateRepositoriesSettingValue = OrganizationMembersCanCreateRepositoriesSettingValue = {}));
 /** Properties by which organization connections can be ordered. */
 var OrganizationOrderField;
 (function (OrganizationOrderField) {
@@ -778,19 +778,19 @@ var OrganizationOrderField;
     OrganizationOrderField["CreatedAt"] = "CREATED_AT";
     /** Order organizations by login */
     OrganizationOrderField["Login"] = "LOGIN";
-})(OrganizationOrderField = exports.OrganizationOrderField || (exports.OrganizationOrderField = {}));
+})(OrganizationOrderField || (exports.OrganizationOrderField = OrganizationOrderField = {}));
 /** Properties by which package file connections can be ordered. */
 var PackageFileOrderField;
 (function (PackageFileOrderField) {
     /** Order package files by creation time */
     PackageFileOrderField["CreatedAt"] = "CREATED_AT";
-})(PackageFileOrderField = exports.PackageFileOrderField || (exports.PackageFileOrderField = {}));
+})(PackageFileOrderField || (exports.PackageFileOrderField = PackageFileOrderField = {}));
 /** Properties by which package connections can be ordered. */
 var PackageOrderField;
 (function (PackageOrderField) {
     /** Order packages by creation time */
     PackageOrderField["CreatedAt"] = "CREATED_AT";
-})(PackageOrderField = exports.PackageOrderField || (exports.PackageOrderField = {}));
+})(PackageOrderField || (exports.PackageOrderField = PackageOrderField = {}));
 /** The possible types of a package. */
 var PackageType;
 (function (PackageType) {
@@ -808,13 +808,13 @@ var PackageType;
     PackageType["Nuget"] = "NUGET";
     /** A python package. */
     PackageType["Pypi"] = "PYPI";
-})(PackageType = exports.PackageType || (exports.PackageType = {}));
+})(PackageType || (exports.PackageType = PackageType = {}));
 /** Properties by which package version connections can be ordered. */
 var PackageVersionOrderField;
 (function (PackageVersionOrderField) {
     /** Order package versions by creation time */
     PackageVersionOrderField["CreatedAt"] = "CREATED_AT";
-})(PackageVersionOrderField = exports.PackageVersionOrderField || (exports.PackageVersionOrderField = {}));
+})(PackageVersionOrderField || (exports.PackageVersionOrderField = PackageVersionOrderField = {}));
 /** Represents items that can be pinned to a profile page or dashboard. */
 var PinnableItemType;
 (function (PinnableItemType) {
@@ -834,7 +834,7 @@ var PinnableItemType;
     PinnableItemType["Organization"] = "ORGANIZATION";
     /** A team. */
     PinnableItemType["Team"] = "TEAM";
-})(PinnableItemType = exports.PinnableItemType || (exports.PinnableItemType = {}));
+})(PinnableItemType || (exports.PinnableItemType = PinnableItemType = {}));
 /** The possible archived states of a project card. */
 var ProjectCardArchivedState;
 (function (ProjectCardArchivedState) {
@@ -842,7 +842,7 @@ var ProjectCardArchivedState;
     ProjectCardArchivedState["Archived"] = "ARCHIVED";
     /** A project card that is not archived */
     ProjectCardArchivedState["NotArchived"] = "NOT_ARCHIVED";
-})(ProjectCardArchivedState = exports.ProjectCardArchivedState || (exports.ProjectCardArchivedState = {}));
+})(ProjectCardArchivedState || (exports.ProjectCardArchivedState = ProjectCardArchivedState = {}));
 /** Various content states of a ProjectCard */
 var ProjectCardState;
 (function (ProjectCardState) {
@@ -852,7 +852,7 @@ var ProjectCardState;
     ProjectCardState["NoteOnly"] = "NOTE_ONLY";
     /** The card is redacted. */
     ProjectCardState["Redacted"] = "REDACTED";
-})(ProjectCardState = exports.ProjectCardState || (exports.ProjectCardState = {}));
+})(ProjectCardState || (exports.ProjectCardState = ProjectCardState = {}));
 /** The semantic purpose of the column - todo, in progress, or done. */
 var ProjectColumnPurpose;
 (function (ProjectColumnPurpose) {
@@ -862,7 +862,7 @@ var ProjectColumnPurpose;
     ProjectColumnPurpose["InProgress"] = "IN_PROGRESS";
     /** The column contains cards which are complete */
     ProjectColumnPurpose["Done"] = "DONE";
-})(ProjectColumnPurpose = exports.ProjectColumnPurpose || (exports.ProjectColumnPurpose = {}));
+})(ProjectColumnPurpose || (exports.ProjectColumnPurpose = ProjectColumnPurpose = {}));
 /** Properties by which project connections can be ordered. */
 var ProjectOrderField;
 (function (ProjectOrderField) {
@@ -872,7 +872,7 @@ var ProjectOrderField;
     ProjectOrderField["UpdatedAt"] = "UPDATED_AT";
     /** Order projects by name */
     ProjectOrderField["Name"] = "NAME";
-})(ProjectOrderField = exports.ProjectOrderField || (exports.ProjectOrderField = {}));
+})(ProjectOrderField || (exports.ProjectOrderField = ProjectOrderField = {}));
 /** State of the project; either 'open' or 'closed' */
 var ProjectState;
 (function (ProjectState) {
@@ -880,7 +880,7 @@ var ProjectState;
     ProjectState["Open"] = "OPEN";
     /** The project is closed. */
     ProjectState["Closed"] = "CLOSED";
-})(ProjectState = exports.ProjectState || (exports.ProjectState = {}));
+})(ProjectState || (exports.ProjectState = ProjectState = {}));
 /** GitHub-provided templates for Projects */
 var ProjectTemplate;
 (function (ProjectTemplate) {
@@ -892,7 +892,7 @@ var ProjectTemplate;
     ProjectTemplate["AutomatedReviewsKanban"] = "AUTOMATED_REVIEWS_KANBAN";
     /** Create a board to triage and prioritize bugs with To do, priority, and Done columns. */
     ProjectTemplate["BugTriage"] = "BUG_TRIAGE";
-})(ProjectTemplate = exports.ProjectTemplate || (exports.ProjectTemplate = {}));
+})(ProjectTemplate || (exports.ProjectTemplate = ProjectTemplate = {}));
 /** Represents available types of methods to use when merging a pull request. */
 var PullRequestMergeMethod;
 (function (PullRequestMergeMethod) {
@@ -902,7 +902,7 @@ var PullRequestMergeMethod;
     PullRequestMergeMethod["Squash"] = "SQUASH";
     /** Add all commits from the head branch onto the base branch individually. */
     PullRequestMergeMethod["Rebase"] = "REBASE";
-})(PullRequestMergeMethod = exports.PullRequestMergeMethod || (exports.PullRequestMergeMethod = {}));
+})(PullRequestMergeMethod || (exports.PullRequestMergeMethod = PullRequestMergeMethod = {}));
 /** Properties by which pull_requests connections can be ordered. */
 var PullRequestOrderField;
 (function (PullRequestOrderField) {
@@ -910,7 +910,7 @@ var PullRequestOrderField;
     PullRequestOrderField["CreatedAt"] = "CREATED_AT";
     /** Order pull_requests by update time */
     PullRequestOrderField["UpdatedAt"] = "UPDATED_AT";
-})(PullRequestOrderField = exports.PullRequestOrderField || (exports.PullRequestOrderField = {}));
+})(PullRequestOrderField || (exports.PullRequestOrderField = PullRequestOrderField = {}));
 /** The possible states of a pull request review comment. */
 var PullRequestReviewCommentState;
 (function (PullRequestReviewCommentState) {
@@ -918,7 +918,7 @@ var PullRequestReviewCommentState;
     PullRequestReviewCommentState["Pending"] = "PENDING";
     /** A comment that is part of a submitted review */
     PullRequestReviewCommentState["Submitted"] = "SUBMITTED";
-})(PullRequestReviewCommentState = exports.PullRequestReviewCommentState || (exports.PullRequestReviewCommentState = {}));
+})(PullRequestReviewCommentState || (exports.PullRequestReviewCommentState = PullRequestReviewCommentState = {}));
 /** The review status of a pull request. */
 var PullRequestReviewDecision;
 (function (PullRequestReviewDecision) {
@@ -928,7 +928,7 @@ var PullRequestReviewDecision;
     PullRequestReviewDecision["Approved"] = "APPROVED";
     /** A review is required before the pull request can be merged. */
     PullRequestReviewDecision["ReviewRequired"] = "REVIEW_REQUIRED";
-})(PullRequestReviewDecision = exports.PullRequestReviewDecision || (exports.PullRequestReviewDecision = {}));
+})(PullRequestReviewDecision || (exports.PullRequestReviewDecision = PullRequestReviewDecision = {}));
 /** The possible events to perform on a pull request review. */
 var PullRequestReviewEvent;
 (function (PullRequestReviewEvent) {
@@ -940,7 +940,7 @@ var PullRequestReviewEvent;
     PullRequestReviewEvent["RequestChanges"] = "REQUEST_CHANGES";
     /** Dismiss review so it now longer effects merging. */
     PullRequestReviewEvent["Dismiss"] = "DISMISS";
-})(PullRequestReviewEvent = exports.PullRequestReviewEvent || (exports.PullRequestReviewEvent = {}));
+})(PullRequestReviewEvent || (exports.PullRequestReviewEvent = PullRequestReviewEvent = {}));
 /** The possible states of a pull request review. */
 var PullRequestReviewState;
 (function (PullRequestReviewState) {
@@ -954,7 +954,7 @@ var PullRequestReviewState;
     PullRequestReviewState["ChangesRequested"] = "CHANGES_REQUESTED";
     /** A review that has been dismissed. */
     PullRequestReviewState["Dismissed"] = "DISMISSED";
-})(PullRequestReviewState = exports.PullRequestReviewState || (exports.PullRequestReviewState = {}));
+})(PullRequestReviewState || (exports.PullRequestReviewState = PullRequestReviewState = {}));
 /** The possible states of a pull request. */
 var PullRequestState;
 (function (PullRequestState) {
@@ -964,7 +964,7 @@ var PullRequestState;
     PullRequestState["Closed"] = "CLOSED";
     /** A pull request that has been closed by being merged. */
     PullRequestState["Merged"] = "MERGED";
-})(PullRequestState = exports.PullRequestState || (exports.PullRequestState = {}));
+})(PullRequestState || (exports.PullRequestState = PullRequestState = {}));
 /** The possible item types found in a timeline. */
 var PullRequestTimelineItemsItemType;
 (function (PullRequestTimelineItemsItemType) {
@@ -1070,7 +1070,7 @@ var PullRequestTimelineItemsItemType;
     PullRequestTimelineItemsItemType["UnpinnedEvent"] = "UNPINNED_EVENT";
     /** Represents an 'unsubscribed' event on a given `Subscribable`. */
     PullRequestTimelineItemsItemType["UnsubscribedEvent"] = "UNSUBSCRIBED_EVENT";
-})(PullRequestTimelineItemsItemType = exports.PullRequestTimelineItemsItemType || (exports.PullRequestTimelineItemsItemType = {}));
+})(PullRequestTimelineItemsItemType || (exports.PullRequestTimelineItemsItemType = PullRequestTimelineItemsItemType = {}));
 /** The possible target states when updating a pull request. */
 var PullRequestUpdateState;
 (function (PullRequestUpdateState) {
@@ -1078,7 +1078,7 @@ var PullRequestUpdateState;
     PullRequestUpdateState["Open"] = "OPEN";
     /** A pull request that has been closed without being merged. */
     PullRequestUpdateState["Closed"] = "CLOSED";
-})(PullRequestUpdateState = exports.PullRequestUpdateState || (exports.PullRequestUpdateState = {}));
+})(PullRequestUpdateState || (exports.PullRequestUpdateState = PullRequestUpdateState = {}));
 /** Emojis that can be attached to Issues, Pull Requests and Comments. */
 var ReactionContent;
 (function (ReactionContent) {
@@ -1098,13 +1098,13 @@ var ReactionContent;
     ReactionContent["Rocket"] = "ROCKET";
     /** Represents the `:eyes:` emoji. */
     ReactionContent["Eyes"] = "EYES";
-})(ReactionContent = exports.ReactionContent || (exports.ReactionContent = {}));
+})(ReactionContent || (exports.ReactionContent = ReactionContent = {}));
 /** A list of fields that reactions can be ordered by. */
 var ReactionOrderField;
 (function (ReactionOrderField) {
     /** Allows ordering a list of reactions by when they were created. */
     ReactionOrderField["CreatedAt"] = "CREATED_AT";
-})(ReactionOrderField = exports.ReactionOrderField || (exports.ReactionOrderField = {}));
+})(ReactionOrderField || (exports.ReactionOrderField = ReactionOrderField = {}));
 /** Properties by which ref connections can be ordered. */
 var RefOrderField;
 (function (RefOrderField) {
@@ -1112,7 +1112,7 @@ var RefOrderField;
     RefOrderField["TagCommitDate"] = "TAG_COMMIT_DATE";
     /** Order refs by their alphanumeric name */
     RefOrderField["Alphabetical"] = "ALPHABETICAL";
-})(RefOrderField = exports.RefOrderField || (exports.RefOrderField = {}));
+})(RefOrderField || (exports.RefOrderField = RefOrderField = {}));
 /** Properties by which release connections can be ordered. */
 var ReleaseOrderField;
 (function (ReleaseOrderField) {
@@ -1120,7 +1120,7 @@ var ReleaseOrderField;
     ReleaseOrderField["CreatedAt"] = "CREATED_AT";
     /** Order releases alphabetically by name */
     ReleaseOrderField["Name"] = "NAME";
-})(ReleaseOrderField = exports.ReleaseOrderField || (exports.ReleaseOrderField = {}));
+})(ReleaseOrderField || (exports.ReleaseOrderField = ReleaseOrderField = {}));
 /** The privacy of a repository */
 var RepoAccessAuditEntryVisibility;
 (function (RepoAccessAuditEntryVisibility) {
@@ -1130,7 +1130,7 @@ var RepoAccessAuditEntryVisibility;
     RepoAccessAuditEntryVisibility["Private"] = "PRIVATE";
     /** The repository is visible to everyone. */
     RepoAccessAuditEntryVisibility["Public"] = "PUBLIC";
-})(RepoAccessAuditEntryVisibility = exports.RepoAccessAuditEntryVisibility || (exports.RepoAccessAuditEntryVisibility = {}));
+})(RepoAccessAuditEntryVisibility || (exports.RepoAccessAuditEntryVisibility = RepoAccessAuditEntryVisibility = {}));
 /** The privacy of a repository */
 var RepoAddMemberAuditEntryVisibility;
 (function (RepoAddMemberAuditEntryVisibility) {
@@ -1140,7 +1140,7 @@ var RepoAddMemberAuditEntryVisibility;
     RepoAddMemberAuditEntryVisibility["Private"] = "PRIVATE";
     /** The repository is visible to everyone. */
     RepoAddMemberAuditEntryVisibility["Public"] = "PUBLIC";
-})(RepoAddMemberAuditEntryVisibility = exports.RepoAddMemberAuditEntryVisibility || (exports.RepoAddMemberAuditEntryVisibility = {}));
+})(RepoAddMemberAuditEntryVisibility || (exports.RepoAddMemberAuditEntryVisibility = RepoAddMemberAuditEntryVisibility = {}));
 /** The privacy of a repository */
 var RepoArchivedAuditEntryVisibility;
 (function (RepoArchivedAuditEntryVisibility) {
@@ -1150,7 +1150,7 @@ var RepoArchivedAuditEntryVisibility;
     RepoArchivedAuditEntryVisibility["Private"] = "PRIVATE";
     /** The repository is visible to everyone. */
     RepoArchivedAuditEntryVisibility["Public"] = "PUBLIC";
-})(RepoArchivedAuditEntryVisibility = exports.RepoArchivedAuditEntryVisibility || (exports.RepoArchivedAuditEntryVisibility = {}));
+})(RepoArchivedAuditEntryVisibility || (exports.RepoArchivedAuditEntryVisibility = RepoArchivedAuditEntryVisibility = {}));
 /** The merge options available for pull requests to this repository. */
 var RepoChangeMergeSettingAuditEntryMergeType;
 (function (RepoChangeMergeSettingAuditEntryMergeType) {
@@ -1160,7 +1160,7 @@ var RepoChangeMergeSettingAuditEntryMergeType;
     RepoChangeMergeSettingAuditEntryMergeType["Rebase"] = "REBASE";
     /** The pull request's commits are squashed into a single commit before they are merged to the base branch. */
     RepoChangeMergeSettingAuditEntryMergeType["Squash"] = "SQUASH";
-})(RepoChangeMergeSettingAuditEntryMergeType = exports.RepoChangeMergeSettingAuditEntryMergeType || (exports.RepoChangeMergeSettingAuditEntryMergeType = {}));
+})(RepoChangeMergeSettingAuditEntryMergeType || (exports.RepoChangeMergeSettingAuditEntryMergeType = RepoChangeMergeSettingAuditEntryMergeType = {}));
 /** The privacy of a repository */
 var RepoCreateAuditEntryVisibility;
 (function (RepoCreateAuditEntryVisibility) {
@@ -1170,7 +1170,7 @@ var RepoCreateAuditEntryVisibility;
     RepoCreateAuditEntryVisibility["Private"] = "PRIVATE";
     /** The repository is visible to everyone. */
     RepoCreateAuditEntryVisibility["Public"] = "PUBLIC";
-})(RepoCreateAuditEntryVisibility = exports.RepoCreateAuditEntryVisibility || (exports.RepoCreateAuditEntryVisibility = {}));
+})(RepoCreateAuditEntryVisibility || (exports.RepoCreateAuditEntryVisibility = RepoCreateAuditEntryVisibility = {}));
 /** The privacy of a repository */
 var RepoDestroyAuditEntryVisibility;
 (function (RepoDestroyAuditEntryVisibility) {
@@ -1180,7 +1180,7 @@ var RepoDestroyAuditEntryVisibility;
     RepoDestroyAuditEntryVisibility["Private"] = "PRIVATE";
     /** The repository is visible to everyone. */
     RepoDestroyAuditEntryVisibility["Public"] = "PUBLIC";
-})(RepoDestroyAuditEntryVisibility = exports.RepoDestroyAuditEntryVisibility || (exports.RepoDestroyAuditEntryVisibility = {}));
+})(RepoDestroyAuditEntryVisibility || (exports.RepoDestroyAuditEntryVisibility = RepoDestroyAuditEntryVisibility = {}));
 /** The privacy of a repository */
 var RepoRemoveMemberAuditEntryVisibility;
 (function (RepoRemoveMemberAuditEntryVisibility) {
@@ -1190,7 +1190,7 @@ var RepoRemoveMemberAuditEntryVisibility;
     RepoRemoveMemberAuditEntryVisibility["Private"] = "PRIVATE";
     /** The repository is visible to everyone. */
     RepoRemoveMemberAuditEntryVisibility["Public"] = "PUBLIC";
-})(RepoRemoveMemberAuditEntryVisibility = exports.RepoRemoveMemberAuditEntryVisibility || (exports.RepoRemoveMemberAuditEntryVisibility = {}));
+})(RepoRemoveMemberAuditEntryVisibility || (exports.RepoRemoveMemberAuditEntryVisibility = RepoRemoveMemberAuditEntryVisibility = {}));
 /** The reasons a piece of content can be reported or minimized. */
 var ReportedContentClassifiers;
 (function (ReportedContentClassifiers) {
@@ -1206,7 +1206,7 @@ var ReportedContentClassifiers;
     ReportedContentClassifiers["Duplicate"] = "DUPLICATE";
     /** The content has been resolved */
     ReportedContentClassifiers["Resolved"] = "RESOLVED";
-})(ReportedContentClassifiers = exports.ReportedContentClassifiers || (exports.ReportedContentClassifiers = {}));
+})(ReportedContentClassifiers || (exports.ReportedContentClassifiers = ReportedContentClassifiers = {}));
 /** The affiliation of a user to a repository */
 var RepositoryAffiliation;
 (function (RepositoryAffiliation) {
@@ -1216,7 +1216,7 @@ var RepositoryAffiliation;
     RepositoryAffiliation["Collaborator"] = "COLLABORATOR";
     /** Repositories that the user has access to through being a member of an organization. This includes every repository on every team that the user is on. */
     RepositoryAffiliation["OrganizationMember"] = "ORGANIZATION_MEMBER";
-})(RepositoryAffiliation = exports.RepositoryAffiliation || (exports.RepositoryAffiliation = {}));
+})(RepositoryAffiliation || (exports.RepositoryAffiliation = RepositoryAffiliation = {}));
 /** The reason a repository is listed as 'contributed'. */
 var RepositoryContributionType;
 (function (RepositoryContributionType) {
@@ -1230,7 +1230,7 @@ var RepositoryContributionType;
     RepositoryContributionType["Repository"] = "REPOSITORY";
     /** Reviewed a pull request */
     RepositoryContributionType["PullRequestReview"] = "PULL_REQUEST_REVIEW";
-})(RepositoryContributionType = exports.RepositoryContributionType || (exports.RepositoryContributionType = {}));
+})(RepositoryContributionType || (exports.RepositoryContributionType = RepositoryContributionType = {}));
 /** A repository interaction limit. */
 var RepositoryInteractionLimit;
 (function (RepositoryInteractionLimit) {
@@ -1242,7 +1242,7 @@ var RepositoryInteractionLimit;
     RepositoryInteractionLimit["CollaboratorsOnly"] = "COLLABORATORS_ONLY";
     /** No interaction limits are enabled. */
     RepositoryInteractionLimit["NoLimit"] = "NO_LIMIT";
-})(RepositoryInteractionLimit = exports.RepositoryInteractionLimit || (exports.RepositoryInteractionLimit = {}));
+})(RepositoryInteractionLimit || (exports.RepositoryInteractionLimit = RepositoryInteractionLimit = {}));
 /** The length for a repository interaction limit to be enabled for. */
 var RepositoryInteractionLimitExpiry;
 (function (RepositoryInteractionLimitExpiry) {
@@ -1256,7 +1256,7 @@ var RepositoryInteractionLimitExpiry;
     RepositoryInteractionLimitExpiry["OneMonth"] = "ONE_MONTH";
     /** The interaction limit will expire after 6 months. */
     RepositoryInteractionLimitExpiry["SixMonths"] = "SIX_MONTHS";
-})(RepositoryInteractionLimitExpiry = exports.RepositoryInteractionLimitExpiry || (exports.RepositoryInteractionLimitExpiry = {}));
+})(RepositoryInteractionLimitExpiry || (exports.RepositoryInteractionLimitExpiry = RepositoryInteractionLimitExpiry = {}));
 /** Indicates where an interaction limit is configured. */
 var RepositoryInteractionLimitOrigin;
 (function (RepositoryInteractionLimitOrigin) {
@@ -1266,7 +1266,7 @@ var RepositoryInteractionLimitOrigin;
     RepositoryInteractionLimitOrigin["Organization"] = "ORGANIZATION";
     /** A limit that is configured at the user-wide level. */
     RepositoryInteractionLimitOrigin["User"] = "USER";
-})(RepositoryInteractionLimitOrigin = exports.RepositoryInteractionLimitOrigin || (exports.RepositoryInteractionLimitOrigin = {}));
+})(RepositoryInteractionLimitOrigin || (exports.RepositoryInteractionLimitOrigin = RepositoryInteractionLimitOrigin = {}));
 /** Properties by which repository invitation connections can be ordered. */
 var RepositoryInvitationOrderField;
 (function (RepositoryInvitationOrderField) {
@@ -1274,7 +1274,7 @@ var RepositoryInvitationOrderField;
     RepositoryInvitationOrderField["CreatedAt"] = "CREATED_AT";
     /** Order repository invitations by invitee login */
     RepositoryInvitationOrderField["InviteeLogin"] = "INVITEE_LOGIN";
-})(RepositoryInvitationOrderField = exports.RepositoryInvitationOrderField || (exports.RepositoryInvitationOrderField = {}));
+})(RepositoryInvitationOrderField || (exports.RepositoryInvitationOrderField = RepositoryInvitationOrderField = {}));
 /** The possible reasons a given repository could be in a locked state. */
 var RepositoryLockReason;
 (function (RepositoryLockReason) {
@@ -1286,7 +1286,7 @@ var RepositoryLockReason;
     RepositoryLockReason["Rename"] = "RENAME";
     /** The repository is locked due to a migration. */
     RepositoryLockReason["Migrating"] = "MIGRATING";
-})(RepositoryLockReason = exports.RepositoryLockReason || (exports.RepositoryLockReason = {}));
+})(RepositoryLockReason || (exports.RepositoryLockReason = RepositoryLockReason = {}));
 /** Properties by which repository connections can be ordered. */
 var RepositoryOrderField;
 (function (RepositoryOrderField) {
@@ -1300,7 +1300,7 @@ var RepositoryOrderField;
     RepositoryOrderField["Name"] = "NAME";
     /** Order repositories by number of stargazers */
     RepositoryOrderField["Stargazers"] = "STARGAZERS";
-})(RepositoryOrderField = exports.RepositoryOrderField || (exports.RepositoryOrderField = {}));
+})(RepositoryOrderField || (exports.RepositoryOrderField = RepositoryOrderField = {}));
 /** The access level to a repository */
 var RepositoryPermission;
 (function (RepositoryPermission) {
@@ -1314,7 +1314,7 @@ var RepositoryPermission;
     RepositoryPermission["Triage"] = "TRIAGE";
     /** Can read and clone this repository. Can also open and comment on issues and pull requests */
     RepositoryPermission["Read"] = "READ";
-})(RepositoryPermission = exports.RepositoryPermission || (exports.RepositoryPermission = {}));
+})(RepositoryPermission || (exports.RepositoryPermission = RepositoryPermission = {}));
 /** The privacy of a repository */
 var RepositoryPrivacy;
 (function (RepositoryPrivacy) {
@@ -1322,7 +1322,7 @@ var RepositoryPrivacy;
     RepositoryPrivacy["Public"] = "PUBLIC";
     /** Private */
     RepositoryPrivacy["Private"] = "PRIVATE";
-})(RepositoryPrivacy = exports.RepositoryPrivacy || (exports.RepositoryPrivacy = {}));
+})(RepositoryPrivacy || (exports.RepositoryPrivacy = RepositoryPrivacy = {}));
 /** The repository's visibility level. */
 var RepositoryVisibility;
 (function (RepositoryVisibility) {
@@ -1332,7 +1332,7 @@ var RepositoryVisibility;
     RepositoryVisibility["Public"] = "PUBLIC";
     /** The repository is visible only to users in the same business. */
     RepositoryVisibility["Internal"] = "INTERNAL";
-})(RepositoryVisibility = exports.RepositoryVisibility || (exports.RepositoryVisibility = {}));
+})(RepositoryVisibility || (exports.RepositoryVisibility = RepositoryVisibility = {}));
 /** The possible states that can be requested when creating a check run. */
 var RequestableCheckStatusState;
 (function (RequestableCheckStatusState) {
@@ -1342,7 +1342,7 @@ var RequestableCheckStatusState;
     RequestableCheckStatusState["InProgress"] = "IN_PROGRESS";
     /** The check suite or run has been completed. */
     RequestableCheckStatusState["Completed"] = "COMPLETED";
-})(RequestableCheckStatusState = exports.RequestableCheckStatusState || (exports.RequestableCheckStatusState = {}));
+})(RequestableCheckStatusState || (exports.RequestableCheckStatusState = RequestableCheckStatusState = {}));
 /** The possible digest algorithms used to sign SAML requests for an identity provider. */
 var SamlDigestAlgorithm;
 (function (SamlDigestAlgorithm) {
@@ -1354,7 +1354,7 @@ var SamlDigestAlgorithm;
     SamlDigestAlgorithm["Sha384"] = "SHA384";
     /** SHA512 */
     SamlDigestAlgorithm["Sha512"] = "SHA512";
-})(SamlDigestAlgorithm = exports.SamlDigestAlgorithm || (exports.SamlDigestAlgorithm = {}));
+})(SamlDigestAlgorithm || (exports.SamlDigestAlgorithm = SamlDigestAlgorithm = {}));
 /** The possible signature algorithms used to sign SAML requests for a Identity Provider. */
 var SamlSignatureAlgorithm;
 (function (SamlSignatureAlgorithm) {
@@ -1366,13 +1366,13 @@ var SamlSignatureAlgorithm;
     SamlSignatureAlgorithm["RsaSha384"] = "RSA_SHA384";
     /** RSA-SHA512 */
     SamlSignatureAlgorithm["RsaSha512"] = "RSA_SHA512";
-})(SamlSignatureAlgorithm = exports.SamlSignatureAlgorithm || (exports.SamlSignatureAlgorithm = {}));
+})(SamlSignatureAlgorithm || (exports.SamlSignatureAlgorithm = SamlSignatureAlgorithm = {}));
 /** Properties by which saved reply connections can be ordered. */
 var SavedReplyOrderField;
 (function (SavedReplyOrderField) {
     /** Order saved reply by when they were updated. */
     SavedReplyOrderField["UpdatedAt"] = "UPDATED_AT";
-})(SavedReplyOrderField = exports.SavedReplyOrderField || (exports.SavedReplyOrderField = {}));
+})(SavedReplyOrderField || (exports.SavedReplyOrderField = SavedReplyOrderField = {}));
 /** Represents the individual results of a search. */
 var SearchType;
 (function (SearchType) {
@@ -1382,7 +1382,7 @@ var SearchType;
     SearchType["Repository"] = "REPOSITORY";
     /** Returns results matching users and organizations on GitHub. */
     SearchType["User"] = "USER";
-})(SearchType = exports.SearchType || (exports.SearchType = {}));
+})(SearchType || (exports.SearchType = SearchType = {}));
 /** The possible ecosystems of a security vulnerability's package. */
 var SecurityAdvisoryEcosystem;
 (function (SecurityAdvisoryEcosystem) {
@@ -1398,7 +1398,7 @@ var SecurityAdvisoryEcosystem;
     SecurityAdvisoryEcosystem["Nuget"] = "NUGET";
     /** PHP packages hosted at packagist.org */
     SecurityAdvisoryEcosystem["Composer"] = "COMPOSER";
-})(SecurityAdvisoryEcosystem = exports.SecurityAdvisoryEcosystem || (exports.SecurityAdvisoryEcosystem = {}));
+})(SecurityAdvisoryEcosystem || (exports.SecurityAdvisoryEcosystem = SecurityAdvisoryEcosystem = {}));
 /** Identifier formats available for advisories. */
 var SecurityAdvisoryIdentifierType;
 (function (SecurityAdvisoryIdentifierType) {
@@ -1406,7 +1406,7 @@ var SecurityAdvisoryIdentifierType;
     SecurityAdvisoryIdentifierType["Cve"] = "CVE";
     /** GitHub Security Advisory ID. */
     SecurityAdvisoryIdentifierType["Ghsa"] = "GHSA";
-})(SecurityAdvisoryIdentifierType = exports.SecurityAdvisoryIdentifierType || (exports.SecurityAdvisoryIdentifierType = {}));
+})(SecurityAdvisoryIdentifierType || (exports.SecurityAdvisoryIdentifierType = SecurityAdvisoryIdentifierType = {}));
 /** Properties by which security advisory connections can be ordered. */
 var SecurityAdvisoryOrderField;
 (function (SecurityAdvisoryOrderField) {
@@ -1414,7 +1414,7 @@ var SecurityAdvisoryOrderField;
     SecurityAdvisoryOrderField["PublishedAt"] = "PUBLISHED_AT";
     /** Order advisories by update time */
     SecurityAdvisoryOrderField["UpdatedAt"] = "UPDATED_AT";
-})(SecurityAdvisoryOrderField = exports.SecurityAdvisoryOrderField || (exports.SecurityAdvisoryOrderField = {}));
+})(SecurityAdvisoryOrderField || (exports.SecurityAdvisoryOrderField = SecurityAdvisoryOrderField = {}));
 /** Severity of the vulnerability. */
 var SecurityAdvisorySeverity;
 (function (SecurityAdvisorySeverity) {
@@ -1426,13 +1426,13 @@ var SecurityAdvisorySeverity;
     SecurityAdvisorySeverity["High"] = "HIGH";
     /** Critical. */
     SecurityAdvisorySeverity["Critical"] = "CRITICAL";
-})(SecurityAdvisorySeverity = exports.SecurityAdvisorySeverity || (exports.SecurityAdvisorySeverity = {}));
+})(SecurityAdvisorySeverity || (exports.SecurityAdvisorySeverity = SecurityAdvisorySeverity = {}));
 /** Properties by which security vulnerability connections can be ordered. */
 var SecurityVulnerabilityOrderField;
 (function (SecurityVulnerabilityOrderField) {
     /** Order vulnerability by update time */
     SecurityVulnerabilityOrderField["UpdatedAt"] = "UPDATED_AT";
-})(SecurityVulnerabilityOrderField = exports.SecurityVulnerabilityOrderField || (exports.SecurityVulnerabilityOrderField = {}));
+})(SecurityVulnerabilityOrderField || (exports.SecurityVulnerabilityOrderField = SecurityVulnerabilityOrderField = {}));
 /** Properties by which Sponsors tiers connections can be ordered. */
 var SponsorsTierOrderField;
 (function (SponsorsTierOrderField) {
@@ -1440,13 +1440,13 @@ var SponsorsTierOrderField;
     SponsorsTierOrderField["CreatedAt"] = "CREATED_AT";
     /** Order tiers by their monthly price in cents */
     SponsorsTierOrderField["MonthlyPriceInCents"] = "MONTHLY_PRICE_IN_CENTS";
-})(SponsorsTierOrderField = exports.SponsorsTierOrderField || (exports.SponsorsTierOrderField = {}));
+})(SponsorsTierOrderField || (exports.SponsorsTierOrderField = SponsorsTierOrderField = {}));
 /** Properties by which sponsorship connections can be ordered. */
 var SponsorshipOrderField;
 (function (SponsorshipOrderField) {
     /** Order sponsorship by creation time. */
     SponsorshipOrderField["CreatedAt"] = "CREATED_AT";
-})(SponsorshipOrderField = exports.SponsorshipOrderField || (exports.SponsorshipOrderField = {}));
+})(SponsorshipOrderField || (exports.SponsorshipOrderField = SponsorshipOrderField = {}));
 /** The privacy of a sponsorship */
 var SponsorshipPrivacy;
 (function (SponsorshipPrivacy) {
@@ -1454,13 +1454,13 @@ var SponsorshipPrivacy;
     SponsorshipPrivacy["Public"] = "PUBLIC";
     /** Private */
     SponsorshipPrivacy["Private"] = "PRIVATE";
-})(SponsorshipPrivacy = exports.SponsorshipPrivacy || (exports.SponsorshipPrivacy = {}));
+})(SponsorshipPrivacy || (exports.SponsorshipPrivacy = SponsorshipPrivacy = {}));
 /** Properties by which star connections can be ordered. */
 var StarOrderField;
 (function (StarOrderField) {
     /** Allows ordering a list of stars by when they were created. */
     StarOrderField["StarredAt"] = "STARRED_AT";
-})(StarOrderField = exports.StarOrderField || (exports.StarOrderField = {}));
+})(StarOrderField || (exports.StarOrderField = StarOrderField = {}));
 /** The possible commit status states. */
 var StatusState;
 (function (StatusState) {
@@ -1474,7 +1474,7 @@ var StatusState;
     StatusState["Pending"] = "PENDING";
     /** Status is successful. */
     StatusState["Success"] = "SUCCESS";
-})(StatusState = exports.StatusState || (exports.StatusState = {}));
+})(StatusState || (exports.StatusState = StatusState = {}));
 /** The possible states of a subscription. */
 var SubscriptionState;
 (function (SubscriptionState) {
@@ -1484,19 +1484,19 @@ var SubscriptionState;
     SubscriptionState["Subscribed"] = "SUBSCRIBED";
     /** The User is never notified. */
     SubscriptionState["Ignored"] = "IGNORED";
-})(SubscriptionState = exports.SubscriptionState || (exports.SubscriptionState = {}));
+})(SubscriptionState || (exports.SubscriptionState = SubscriptionState = {}));
 /** Properties by which team discussion comment connections can be ordered. */
 var TeamDiscussionCommentOrderField;
 (function (TeamDiscussionCommentOrderField) {
     /** Allows sequential ordering of team discussion comments (which is equivalent to chronological ordering). */
     TeamDiscussionCommentOrderField["Number"] = "NUMBER";
-})(TeamDiscussionCommentOrderField = exports.TeamDiscussionCommentOrderField || (exports.TeamDiscussionCommentOrderField = {}));
+})(TeamDiscussionCommentOrderField || (exports.TeamDiscussionCommentOrderField = TeamDiscussionCommentOrderField = {}));
 /** Properties by which team discussion connections can be ordered. */
 var TeamDiscussionOrderField;
 (function (TeamDiscussionOrderField) {
     /** Allows chronological ordering of team discussions. */
     TeamDiscussionOrderField["CreatedAt"] = "CREATED_AT";
-})(TeamDiscussionOrderField = exports.TeamDiscussionOrderField || (exports.TeamDiscussionOrderField = {}));
+})(TeamDiscussionOrderField || (exports.TeamDiscussionOrderField = TeamDiscussionOrderField = {}));
 /** Properties by which team member connections can be ordered. */
 var TeamMemberOrderField;
 (function (TeamMemberOrderField) {
@@ -1504,7 +1504,7 @@ var TeamMemberOrderField;
     TeamMemberOrderField["Login"] = "LOGIN";
     /** Order team members by creation time */
     TeamMemberOrderField["CreatedAt"] = "CREATED_AT";
-})(TeamMemberOrderField = exports.TeamMemberOrderField || (exports.TeamMemberOrderField = {}));
+})(TeamMemberOrderField || (exports.TeamMemberOrderField = TeamMemberOrderField = {}));
 /** The possible team member roles; either 'maintainer' or 'member'. */
 var TeamMemberRole;
 (function (TeamMemberRole) {
@@ -1512,7 +1512,7 @@ var TeamMemberRole;
     TeamMemberRole["Maintainer"] = "MAINTAINER";
     /** A team member has no administrative permissions on the team. */
     TeamMemberRole["Member"] = "MEMBER";
-})(TeamMemberRole = exports.TeamMemberRole || (exports.TeamMemberRole = {}));
+})(TeamMemberRole || (exports.TeamMemberRole = TeamMemberRole = {}));
 /** Defines which types of team members are included in the returned list. Can be one of IMMEDIATE, CHILD_TEAM or ALL. */
 var TeamMembershipType;
 (function (TeamMembershipType) {
@@ -1522,13 +1522,13 @@ var TeamMembershipType;
     TeamMembershipType["ChildTeam"] = "CHILD_TEAM";
     /** Includes immediate and child team members for the team. */
     TeamMembershipType["All"] = "ALL";
-})(TeamMembershipType = exports.TeamMembershipType || (exports.TeamMembershipType = {}));
+})(TeamMembershipType || (exports.TeamMembershipType = TeamMembershipType = {}));
 /** Properties by which team connections can be ordered. */
 var TeamOrderField;
 (function (TeamOrderField) {
     /** Allows ordering a list of teams by name. */
     TeamOrderField["Name"] = "NAME";
-})(TeamOrderField = exports.TeamOrderField || (exports.TeamOrderField = {}));
+})(TeamOrderField || (exports.TeamOrderField = TeamOrderField = {}));
 /** The possible team privacy values. */
 var TeamPrivacy;
 (function (TeamPrivacy) {
@@ -1536,7 +1536,7 @@ var TeamPrivacy;
     TeamPrivacy["Secret"] = "SECRET";
     /** A visible team can be seen and @mentioned by every member of the organization. */
     TeamPrivacy["Visible"] = "VISIBLE";
-})(TeamPrivacy = exports.TeamPrivacy || (exports.TeamPrivacy = {}));
+})(TeamPrivacy || (exports.TeamPrivacy = TeamPrivacy = {}));
 /** Properties by which team repository connections can be ordered. */
 var TeamRepositoryOrderField;
 (function (TeamRepositoryOrderField) {
@@ -1552,7 +1552,7 @@ var TeamRepositoryOrderField;
     TeamRepositoryOrderField["Permission"] = "PERMISSION";
     /** Order repositories by number of stargazers */
     TeamRepositoryOrderField["Stargazers"] = "STARGAZERS";
-})(TeamRepositoryOrderField = exports.TeamRepositoryOrderField || (exports.TeamRepositoryOrderField = {}));
+})(TeamRepositoryOrderField || (exports.TeamRepositoryOrderField = TeamRepositoryOrderField = {}));
 /** The role of a user on a team. */
 var TeamRole;
 (function (TeamRole) {
@@ -1560,7 +1560,7 @@ var TeamRole;
     TeamRole["Admin"] = "ADMIN";
     /** User is a member of the team. */
     TeamRole["Member"] = "MEMBER";
-})(TeamRole = exports.TeamRole || (exports.TeamRole = {}));
+})(TeamRole || (exports.TeamRole = TeamRole = {}));
 /** Reason that the suggested topic is declined. */
 var TopicSuggestionDeclineReason;
 (function (TopicSuggestionDeclineReason) {
@@ -1572,7 +1572,7 @@ var TopicSuggestionDeclineReason;
     TopicSuggestionDeclineReason["PersonalPreference"] = "PERSONAL_PREFERENCE";
     /** The suggested topic is too general for the repository. */
     TopicSuggestionDeclineReason["TooGeneral"] = "TOO_GENERAL";
-})(TopicSuggestionDeclineReason = exports.TopicSuggestionDeclineReason || (exports.TopicSuggestionDeclineReason = {}));
+})(TopicSuggestionDeclineReason || (exports.TopicSuggestionDeclineReason = TopicSuggestionDeclineReason = {}));
 /** The possible durations that a user can be blocked for. */
 var UserBlockDuration;
 (function (UserBlockDuration) {
@@ -1586,10 +1586,10 @@ var UserBlockDuration;
     UserBlockDuration["OneMonth"] = "ONE_MONTH";
     /** The user was blocked permanently */
     UserBlockDuration["Permanent"] = "PERMANENT";
-})(UserBlockDuration = exports.UserBlockDuration || (exports.UserBlockDuration = {}));
+})(UserBlockDuration || (exports.UserBlockDuration = UserBlockDuration = {}));
 /** Properties by which user status connections can be ordered. */
 var UserStatusOrderField;
 (function (UserStatusOrderField) {
     /** Order user statuses by when they were updated. */
     UserStatusOrderField["UpdatedAt"] = "UPDATED_AT";
-})(UserStatusOrderField = exports.UserStatusOrderField || (exports.UserStatusOrderField = {}));
+})(UserStatusOrderField || (exports.UserStatusOrderField = UserStatusOrderField = {}));

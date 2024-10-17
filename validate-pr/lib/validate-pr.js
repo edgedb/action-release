@@ -40,9 +40,9 @@ const github = __importStar(require("@actions/github"));
 const parse_diff_1 = __importDefault(require("parse-diff"));
 const fetch = __importStar(require("node-fetch"));
 const pep440 = __importStar(require("@renovate/pep440"));
-function isMaintainer({ octokit, user, owner, repo, teamName = '', accessLevel = 'MAINTAIN' }) {
-    var _a, _b;
-    return __awaiter(this, void 0, void 0, function* () {
+function isMaintainer(_a) {
+    return __awaiter(this, arguments, void 0, function* ({ octokit, user, owner, repo, teamName = '', accessLevel = 'MAINTAIN' }) {
+        var _b, _c;
         const response = yield octokit.graphql(teamName !== ''
             ? `
       {
@@ -99,8 +99,8 @@ function isMaintainer({ octokit, user, owner, repo, teamName = '', accessLevel =
         let permission = 0;
         if (teams) {
             for (const team of teams) {
-                const repos = (_a = team === null || team === void 0 ? void 0 : team.node) === null || _a === void 0 ? void 0 : _a.repositories.edges;
-                if (!repos || (teamName !== '' && ((_b = team === null || team === void 0 ? void 0 : team.node) === null || _b === void 0 ? void 0 : _b.name) !== teamName)) {
+                const repos = (_b = team === null || team === void 0 ? void 0 : team.node) === null || _b === void 0 ? void 0 : _b.repositories.edges;
+                if (!repos || (teamName !== '' && ((_c = team === null || team === void 0 ? void 0 : team.node) === null || _c === void 0 ? void 0 : _c.name) !== teamName)) {
                     continue;
                 }
                 for (const teamRepo of repos) {
@@ -221,8 +221,8 @@ function isApproved(octokit, pullRequest) {
         return false;
     });
 }
-function approve({ octokit, owner, repo, pullRequest }) {
-    return __awaiter(this, void 0, void 0, function* () {
+function approve(_a) {
+    return __awaiter(this, arguments, void 0, function* ({ octokit, owner, repo, pullRequest }) {
         yield octokit.rest.pulls.createReview({
             owner,
             repo,
