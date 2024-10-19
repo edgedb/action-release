@@ -20,6 +20,11 @@ if [ -z "${message}" ]; then
 $(jqevent .pull_request.body)"
 fi
 
-git fetch origin "${GITHUB_REF}"
+git fetch origin "${pr_sha}"
 echo "${message}" | git tag --sign --file=- "${INPUT_TAG_NAME}" "${pr_sha}"
-git push --force --follow-tags origin "${pr_sha}":"${base_ref}"
+
+git config --list
+env GCM_TRACE=1 GIT_TRACE=1 GIT_TRANSFER_TRACE=1 GIT_CURL_VERBOSE=1 \
+  git \
+    -c "http.https://github.com/.extraheader=" \
+    push --force --follow-tags origin "${pr_sha}":"${base_ref}"
