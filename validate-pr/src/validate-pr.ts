@@ -313,6 +313,8 @@ async function run() {
     )
     core.setOutput('version', version)
     if (version === '') {
+      core.setOutput('approved', 'false')
+      core.setOutput('is_release', '')
       return
     }
     let approved = 'false'
@@ -328,6 +330,7 @@ async function run() {
     }
 
     core.setOutput('approved', approved)
+    core.setOutput('is_release', 'true')
   } catch (error) {
     core.setFailed((error as Error).message)
   }

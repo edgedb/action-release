@@ -271,6 +271,8 @@ function run() {
             const version = getVersionFromDiff(diffText, verFile, verPattern, verDiffRequired);
             core.setOutput('version', version);
             if (version === '') {
+                core.setOutput('approved', 'false');
+                core.setOutput('is_release', '');
                 return;
             }
             let approved = 'false';
@@ -286,6 +288,7 @@ function run() {
                 core.setFailed(`Release pull requests require maintainer approval.`);
             }
             core.setOutput('approved', approved);
+            core.setOutput('is_release', 'true');
         }
         catch (error) {
             core.setFailed(error.message);

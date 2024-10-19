@@ -34,6 +34,8 @@ inputs:
       otherwise membership in any team with adequate access is sufficient.
     default: MAINTAIN
 outputs:
+  is_release:
+    description: Whether the PR is actually a release PR.
   version:
     description: The release version.
   approved:
